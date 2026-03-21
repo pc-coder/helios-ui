@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "./constants"
 import { HeliosError } from "@/types/errors"
 import { emitSessionExpired } from "./auth-interceptor"
+import { getTracingHeaders } from "./tracing"
 
 export async function streamSSE(
   path: string,
@@ -10,7 +11,7 @@ export async function streamSSE(
 ): Promise<void> {
   const response = await fetch(`${API_BASE_URL}${path}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...getTracingHeaders() },
     body: JSON.stringify(body),
     signal,
   })

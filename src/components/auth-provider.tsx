@@ -2,6 +2,7 @@
 import * as React from "react"
 import type { Session } from "@/lib/auth"
 import { loadSession, saveSession, clearSession } from "@/lib/auth"
+import { resetSessionTracingId } from "@/lib/tracing"
 
 interface AuthContextState {
   session: Session | null
@@ -23,6 +24,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logout = React.useCallback(() => {
     clearSession()
+    resetSessionTracingId()
     setSessionState(null)
   }, [])
 
