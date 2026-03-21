@@ -2,7 +2,6 @@ import { Outlet } from "react-router"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import { AppSidebar } from "@/components/app-sidebar"
-import { SearchCommand } from "@/components/search-command"
 
 export function Layout() {
   return (
@@ -17,7 +16,6 @@ export function Layout() {
             <Outlet />
           </div>
         </main>
-        <SearchCommand />
       </SidebarProvider>
     </TooltipProvider>
   )

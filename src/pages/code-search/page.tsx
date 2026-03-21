@@ -1,5 +1,7 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { useSearchParams } from "react-router"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { SourceCodeIcon } from "@hugeicons/core-free-icons"
 import { useSSEStream } from "@/hooks/use-sse-stream"
 import { CodeSearchBar } from "./components/code-search-bar"
 import { CodeStreamingResponse } from "./components/code-streaming-response"
@@ -43,6 +45,19 @@ export function CodeSearchPage() {
     })
   }, [query, project, repository, startStream])
 
+  const autoSubmitted = useRef(false)
+  useEffect(() => {
+    if (searchParams.get("auto") === "1" && query.trim() && !autoSubmitted.current) {
+      autoSubmitted.current = true
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev)
+        next.delete("auto")
+        return next
+      }, { replace: true })
+      handleSubmit()
+    }
+  }, [searchParams, query, handleSubmit, setSearchParams])
+
   return (
     <div className="space-y-6">
       <div>
@@ -77,7 +92,8 @@ export function CodeSearchPage() {
       />
 
       {!content && !isStreaming && !error && (
-        <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
+        <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
+          <HugeiconsIcon icon={SourceCodeIcon} size={40} className="text-muted-foreground/30" />
           <p className="text-sm text-muted-foreground">
             Ask a question to search across your codebases
           </p>

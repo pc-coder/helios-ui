@@ -1,5 +1,7 @@
-import { useCallback } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { useSearchParams } from "react-router"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { ApiIcon } from "@hugeicons/core-free-icons"
 import { useSSEStream } from "@/hooks/use-sse-stream"
 import { useApiRawSearch } from "@/hooks/use-api-search"
 import { ApiSearchBar } from "./components/api-search-bar"
@@ -53,6 +55,19 @@ export function ApiSearchPage() {
     })
   }, [query, method, service, mode, startStream])
 
+  const autoSubmitted = useRef(false)
+  useEffect(() => {
+    if (searchParams.get("auto") === "1" && query.trim() && !autoSubmitted.current) {
+      autoSubmitted.current = true
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev)
+        next.delete("auto")
+        return next
+      }, { replace: true })
+      handleSubmit()
+    }
+  }, [searchParams, query, handleSubmit, setSearchParams])
+
   return (
     <div className="space-y-6">
       <div>
@@ -96,7 +111,8 @@ export function ApiSearchPage() {
       )}
 
       {!content && !isStreaming && !error && mode === "semantic" && (
-        <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
+        <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
+          <HugeiconsIcon icon={ApiIcon} size={40} className="text-muted-foreground/30" />
           <p className="text-sm text-muted-foreground">
             Ask about API endpoints using natural language
           </p>
@@ -107,7 +123,8 @@ export function ApiSearchPage() {
       )}
 
       {mode === "raw" && !rawSearch.data && !rawSearch.isLoading && (
-        <div className="flex flex-col items-center justify-center gap-2 py-20 text-center">
+        <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
+          <HugeiconsIcon icon={ApiIcon} size={40} className="text-muted-foreground/30" />
           <p className="text-sm text-muted-foreground">
             Search for API endpoints by keyword
           </p>

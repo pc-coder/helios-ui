@@ -72,6 +72,9 @@ export function CodeSearchBar({
           ) : (
             <Button type="submit" size="sm" disabled={!query.trim()}>
               Search
+              <kbd className="ml-1 rounded border border-current/20 px-1 text-[10px] opacity-50">
+                ↵
+              </kbd>
             </Button>
           )}
         </div>

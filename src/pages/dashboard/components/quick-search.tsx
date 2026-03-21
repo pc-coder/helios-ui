@@ -20,7 +20,7 @@ export function QuickSearch() {
     e.preventDefault()
     const trimmed = query.trim()
     if (!trimmed) return
-    navigate(`/${mode}?q=${encodeURIComponent(trimmed)}`)
+    navigate(`/${mode}?q=${encodeURIComponent(trimmed)}&auto=1`)
   }
 
   return (

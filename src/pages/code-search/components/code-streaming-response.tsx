@@ -17,6 +17,13 @@ export function CodeStreamingResponse({
 
   return (
     <div className="space-y-6">
+      {isStreaming && !content && (
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <span className="inline-block size-1.5 animate-pulse rounded-full bg-primary" />
+          Thinking...
+        </div>
+      )}
+
       <StreamingText content={content} isStreaming={isStreaming} />
 
       {sources.length > 0 && (
