@@ -15,7 +15,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
           <div>
             <h3 className="font-semibold">{project.display_name}</h3>
             <p className="text-xs text-muted-foreground">
-              {project.repositories_count} repositor{project.repositories_count !== 1 ? "ies" : "y"}
+              {project.repositories_count} repositor
+              {project.repositories_count !== 1 ? "ies" : "y"}
             </p>
           </div>
 

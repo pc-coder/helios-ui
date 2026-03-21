@@ -1,5 +1,9 @@
 import { http, HttpResponse } from "msw"
-import { codeStats, codeFilters, codeSearchStreamingResponse } from "../data/code"
+import {
+  codeStats,
+  codeFilters,
+  codeSearchStreamingResponse,
+} from "../data/code"
 import { createSSEStream } from "../utils/sse"
 
 const BASE = "/api/helios/v1/code"

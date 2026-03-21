@@ -21,10 +21,11 @@ export function RepositoryHealthPage() {
   }>()
 
   const { data: project } = useProjectDetail(projectId ?? "")
-  const { data: repo, isLoading, error } = useRepositoryHealth(
-    projectId ?? "",
-    repositoryId ?? ""
-  )
+  const {
+    data: repo,
+    isLoading,
+    error,
+  } = useRepositoryHealth(projectId ?? "", repositoryId ?? "")
 
   if (isLoading) {
     return (
@@ -75,7 +76,9 @@ export function RepositoryHealthPage() {
       </Breadcrumb>
 
       <div>
-        <h1 className="text-2xl font-bold tracking-tight">{repo.display_name}</h1>
+        <h1 className="text-2xl font-bold tracking-tight">
+          {repo.display_name}
+        </h1>
         <p className="font-mono text-sm text-muted-foreground">
           Default branch: {repo.default_branch}
         </p>
@@ -89,7 +92,9 @@ export function RepositoryHealthPage() {
           </CardHeader>
           <CardContent className="space-y-3">
             <div className="flex items-baseline justify-between">
-              <span className="text-sm text-muted-foreground">Total branches</span>
+              <span className="text-sm text-muted-foreground">
+                Total branches
+              </span>
               <span className="text-lg font-semibold tabular-nums">
                 {repo.total_branches}
               </span>
@@ -103,7 +108,11 @@ export function RepositoryHealthPage() {
                 </p>
                 <div className="flex flex-wrap gap-1.5">
                   {repo.stale_branches.map((branch) => (
-                    <Badge key={branch} variant="secondary" className="font-mono text-xs">
+                    <Badge
+                      key={branch}
+                      variant="secondary"
+                      className="font-mono text-xs"
+                    >
                       {branch}
                     </Badge>
                   ))}
@@ -167,7 +176,9 @@ export function RepositoryHealthPage() {
                 ))}
               </div>
             ) : (
-              <p className="text-xs text-muted-foreground">No pipelines configured</p>
+              <p className="text-xs text-muted-foreground">
+                No pipelines configured
+              </p>
             )}
           </CardContent>
         </Card>
@@ -180,7 +191,9 @@ export function RepositoryHealthPage() {
           <CardContent className="space-y-3">
             <div className="flex items-baseline justify-between">
               <span className="text-sm text-muted-foreground">&gt; 500 KB</span>
-              <span className="tabular-nums">{repo.large_files.above_500kb}</span>
+              <span className="tabular-nums">
+                {repo.large_files.above_500kb}
+              </span>
             </div>
             <Separator />
             <div className="flex items-baseline justify-between">

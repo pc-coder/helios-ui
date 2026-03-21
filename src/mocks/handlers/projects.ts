@@ -1,5 +1,9 @@
 import { http, HttpResponse } from "msw"
-import { projectsList, projectDetails, repositoryHealthDetails } from "../data/projects"
+import {
+  projectsList,
+  projectDetails,
+  repositoryHealthDetails,
+} from "../data/projects"
 
 const BASE = "/api/helios/v1/projects"
 
@@ -14,7 +18,12 @@ export const projectHandlers = [
 
     if (!project) {
       return HttpResponse.json(
-        { error: { code: "not_found", message: `Project '${projectId}' not found` } },
+        {
+          error: {
+            code: "not_found",
+            message: `Project '${projectId}' not found`,
+          },
+        },
         { status: 404 }
       )
     }
@@ -31,7 +40,12 @@ export const projectHandlers = [
     const projectRepos = repositoryHealthDetails[projectId]
     if (!projectRepos) {
       return HttpResponse.json(
-        { error: { code: "not_found", message: `Project '${projectId}' not found` } },
+        {
+          error: {
+            code: "not_found",
+            message: `Project '${projectId}' not found`,
+          },
+        },
         { status: 404 }
       )
     }
@@ -39,7 +53,12 @@ export const projectHandlers = [
     const repo = projectRepos[repositoryId]
     if (!repo) {
       return HttpResponse.json(
-        { error: { code: "not_found", message: `Repository '${repositoryId}' not found` } },
+        {
+          error: {
+            code: "not_found",
+            message: `Repository '${repositoryId}' not found`,
+          },
+        },
         { status: 404 }
       )
     }

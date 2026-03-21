@@ -26,7 +26,9 @@ export function ProjectDetailPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{project?.display_name ?? projectId}</BreadcrumbPage>
+            <BreadcrumbPage>
+              {project?.display_name ?? projectId}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

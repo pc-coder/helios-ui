@@ -22,7 +22,7 @@ export function ApiStreamingResponse({
 
       {sources.length > 0 && (
         <div className="space-y-2">
-          <h3 className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          <h3 className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
             Related Endpoints
           </h3>
           <div className="grid gap-2 sm:grid-cols-2">
@@ -32,7 +32,9 @@ export function ApiStreamingResponse({
                   <HttpMethodBadge method={source.method} />
                   <div className="min-w-0">
                     <p className="truncate font-mono text-sm">{source.path}</p>
-                    <p className="text-xs text-muted-foreground">{source.service}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {source.service}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

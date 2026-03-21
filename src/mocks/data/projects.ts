@@ -1,4 +1,8 @@
-import type { ProjectSummary, ProjectDetail, RepositoryHealth } from "@/types/projects"
+import type {
+  ProjectSummary,
+  ProjectDetail,
+  RepositoryHealth,
+} from "@/types/projects"
 
 export const projectsList: ProjectSummary[] = [
   {
@@ -264,20 +268,33 @@ export const projectDetails: Record<string, ProjectDetail> = {
   },
 }
 
-export const repositoryHealthDetails: Record<string, Record<string, RepositoryHealth>> = {
+export const repositoryHealthDetails: Record<
+  string,
+  Record<string, RepositoryHealth>
+> = {
   payments: {
     "payments-api": {
       id: "payments-api",
       display_name: "Payments API",
       default_branch: "main",
       total_branches: 18,
-      stale_branches: ["feature/old-checkout", "hotfix/legacy-tax", "experiment/v2-flow"],
+      stale_branches: [
+        "feature/old-checkout",
+        "hotfix/legacy-tax",
+        "experiment/v2-flow",
+      ],
       open_prs_count: 5,
       open_issues_count: 2,
       languages: ["Java", "Go"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/payments-api/build-and-test" },
-        { name: "deploy-staging", link: "https://ci.example.com/payments-api/deploy-staging" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/payments-api/build-and-test",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/payments-api/deploy-staging",
+        },
       ],
       large_files: { above_500kb: 12, above_1mb: 6, above_5mb: 2 },
     },
@@ -291,7 +308,10 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 4,
       languages: ["Java"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/payments-worker/build-and-test" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/payments-worker/build-and-test",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -305,9 +325,18 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 2,
       languages: ["Python", "TypeScript"],
       pipelines: [
-        { name: "test-python", link: "https://ci.example.com/payments-sdk/test-python" },
-        { name: "test-typescript", link: "https://ci.example.com/payments-sdk/test-typescript" },
-        { name: "publish", link: "https://ci.example.com/payments-sdk/publish" },
+        {
+          name: "test-python",
+          link: "https://ci.example.com/payments-sdk/test-python",
+        },
+        {
+          name: "test-typescript",
+          link: "https://ci.example.com/payments-sdk/test-typescript",
+        },
+        {
+          name: "publish",
+          link: "https://ci.example.com/payments-sdk/publish",
+        },
       ],
       large_files: { above_500kb: 3, above_1mb: 1, above_5mb: 0 },
     },
@@ -323,8 +352,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 1,
       languages: ["Go"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/identity-service/build-and-test" },
-        { name: "deploy-staging", link: "https://ci.example.com/identity-service/deploy-staging" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/identity-service/build-and-test",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/identity-service/deploy-staging",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -338,7 +373,10 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 0,
       languages: ["Go", "TypeScript"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/auth-gateway/build-and-test" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/auth-gateway/build-and-test",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -354,8 +392,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 2,
       languages: ["TypeScript"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/notifications-service/build" },
-        { name: "deploy-staging", link: "https://ci.example.com/notifications-service/deploy" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/notifications-service/build",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/notifications-service/deploy",
+        },
       ],
       large_files: { above_500kb: 5, above_1mb: 2, above_5mb: 0 },
     },
@@ -369,7 +413,10 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 1,
       languages: ["Python"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/notifications-worker/build" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/notifications-worker/build",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -391,10 +438,22 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 6,
       languages: ["Python", "SQL"],
       pipelines: [
-        { name: "unit-tests", link: "https://ci.example.com/data-pipeline/unit-tests" },
-        { name: "integration-tests", link: "https://ci.example.com/data-pipeline/integration" },
-        { name: "deploy-dev", link: "https://ci.example.com/data-pipeline/deploy-dev" },
-        { name: "deploy-staging", link: "https://ci.example.com/data-pipeline/deploy-staging" },
+        {
+          name: "unit-tests",
+          link: "https://ci.example.com/data-pipeline/unit-tests",
+        },
+        {
+          name: "integration-tests",
+          link: "https://ci.example.com/data-pipeline/integration",
+        },
+        {
+          name: "deploy-dev",
+          link: "https://ci.example.com/data-pipeline/deploy-dev",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/data-pipeline/deploy-staging",
+        },
       ],
       large_files: { above_500kb: 18, above_1mb: 7, above_5mb: 3 },
     },
@@ -408,8 +467,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 3,
       languages: ["SQL", "Python"],
       pipelines: [
-        { name: "schema-validation", link: "https://ci.example.com/data-warehouse/schema" },
-        { name: "deploy-migrations", link: "https://ci.example.com/data-warehouse/migrations" },
+        {
+          name: "schema-validation",
+          link: "https://ci.example.com/data-warehouse/schema",
+        },
+        {
+          name: "deploy-migrations",
+          link: "https://ci.example.com/data-warehouse/migrations",
+        },
       ],
       large_files: { above_500kb: 24, above_1mb: 12, above_5mb: 5 },
     },
@@ -423,8 +488,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 2,
       languages: ["Rust"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/analytics-api/build" },
-        { name: "deploy-staging", link: "https://ci.example.com/analytics-api/deploy" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/analytics-api/build",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/analytics-api/deploy",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -440,8 +511,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 0,
       languages: ["TypeScript"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/mobile-bff/build" },
-        { name: "deploy-staging", link: "https://ci.example.com/mobile-bff/deploy" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/mobile-bff/build",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/mobile-bff/deploy",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },
@@ -455,7 +532,10 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 0,
       languages: ["Kotlin"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/mobile-push/build" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/mobile-push/build",
+        },
       ],
       large_files: { above_500kb: 2, above_1mb: 1, above_5mb: 0 },
     },
@@ -466,14 +546,24 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       display_name: "Search Indexer",
       default_branch: "main",
       total_branches: 16,
-      stale_branches: ["feature/v1-index-format", "experiment/gpu-embeddings", "hotfix/memory-leak"],
+      stale_branches: [
+        "feature/v1-index-format",
+        "experiment/gpu-embeddings",
+        "hotfix/memory-leak",
+      ],
       open_prs_count: 5,
       open_issues_count: 3,
       languages: ["Rust", "Go"],
       pipelines: [
         { name: "build", link: "https://ci.example.com/search-indexer/build" },
-        { name: "benchmark", link: "https://ci.example.com/search-indexer/benchmark" },
-        { name: "deploy-staging", link: "https://ci.example.com/search-indexer/deploy" },
+        {
+          name: "benchmark",
+          link: "https://ci.example.com/search-indexer/benchmark",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/search-indexer/deploy",
+        },
       ],
       large_files: { above_500kb: 6, above_1mb: 2, above_5mb: 0 },
     },
@@ -487,8 +577,14 @@ export const repositoryHealthDetails: Record<string, Record<string, RepositoryHe
       open_issues_count: 1,
       languages: ["Go"],
       pipelines: [
-        { name: "build-and-test", link: "https://ci.example.com/search-api/build" },
-        { name: "deploy-staging", link: "https://ci.example.com/search-api/deploy" },
+        {
+          name: "build-and-test",
+          link: "https://ci.example.com/search-api/build",
+        },
+        {
+          name: "deploy-staging",
+          link: "https://ci.example.com/search-api/deploy",
+        },
       ],
       large_files: { above_500kb: 0, above_1mb: 0, above_5mb: 0 },
     },

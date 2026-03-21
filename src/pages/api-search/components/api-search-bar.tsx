@@ -52,7 +52,7 @@ export function ApiSearchBar({
         <HugeiconsIcon
           icon={Search01Icon}
           size={18}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+          className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
         />
         <Input
           value={query}
@@ -62,11 +62,16 @@ export function ApiSearchBar({
               ? "Ask about APIs... e.g. endpoint to create a new user"
               : "Search API endpoints..."
           }
-          className="h-12 pl-10 pr-24 text-sm"
+          className="h-12 pr-24 pl-10 text-sm"
         />
-        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+        <div className="absolute top-1/2 right-2 -translate-y-1/2">
           {isStreaming ? (
-            <Button type="button" variant="destructive" size="sm" onClick={onStop}>
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={onStop}
+            >
               <HugeiconsIcon icon={Cancel01Icon} size={14} />
               Stop
             </Button>

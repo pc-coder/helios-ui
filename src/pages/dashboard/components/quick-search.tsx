@@ -1,7 +1,11 @@
 import { useState } from "react"
 import { useNavigate } from "react-router"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon, SourceCodeIcon, ApiIcon } from "@hugeicons/core-free-icons"
+import {
+  Search01Icon,
+  SourceCodeIcon,
+  ApiIcon,
+} from "@hugeicons/core-free-icons"
 import { Input } from "@/components/ui/input"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
@@ -33,7 +37,7 @@ export function QuickSearch() {
           <HugeiconsIcon
             icon={Search01Icon}
             size={18}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            className="absolute top-1/2 left-3 -translate-y-1/2 text-muted-foreground"
           />
           <Input
             value={query}

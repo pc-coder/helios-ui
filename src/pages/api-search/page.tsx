@@ -17,13 +17,10 @@ export function ApiSearchPage() {
   const { content, sources, isStreaming, error, startStream, abortStream } =
     useSSEStream<ApiSource>()
 
-  const rawSearch = useApiRawSearch(
-    mode === "raw" ? query : "",
-    {
-      method: method && method !== "all" ? method : undefined,
-      service: service && service !== "all" ? service : undefined,
-    }
-  )
+  const rawSearch = useApiRawSearch(mode === "raw" ? query : "", {
+    method: method && method !== "all" ? method : undefined,
+    service: service && service !== "all" ? service : undefined,
+  })
 
   const updateParam = useCallback(
     (key: string, value: string) => {

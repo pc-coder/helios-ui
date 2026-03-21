@@ -9,11 +9,17 @@ interface StreamingTextProps {
   className?: string
 }
 
-export function StreamingText({ content, isStreaming, className }: StreamingTextProps) {
+export function StreamingText({
+  content,
+  isStreaming,
+  className,
+}: StreamingTextProps) {
   if (!content && !isStreaming) return null
 
   return (
-    <div className={cn("prose prose-sm dark:prose-invert max-w-none", className)}>
+    <div
+      className={cn("prose prose-sm dark:prose-invert max-w-none", className)}
+    >
       <Markdown
         remarkPlugins={[remarkGfm]}
         components={{
@@ -28,7 +34,7 @@ export function StreamingText({ content, isStreaming, className }: StreamingText
             return (
               <code
                 className={cn(
-                  "rounded bg-muted px-1.5 py-0.5 text-xs font-mono",
+                  "rounded bg-muted px-1.5 py-0.5 font-mono text-xs",
                   codeClassName
                 )}
                 {...props}

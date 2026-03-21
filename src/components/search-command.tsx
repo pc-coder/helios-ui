@@ -51,7 +51,10 @@ export function SearchCommand() {
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup heading="Pages">
           {pages.map((page) => (
-            <CommandItem key={page.href} onSelect={() => handleSelect(page.href)}>
+            <CommandItem
+              key={page.href}
+              onSelect={() => handleSelect(page.href)}
+            >
               <HugeiconsIcon icon={page.icon} size={16} />
               <span>{page.label}</span>
             </CommandItem>

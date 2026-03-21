@@ -69,7 +69,9 @@ export function AppSidebar() {
                   <HugeiconsIcon icon={Sun03Icon} size={18} />
                 </div>
                 <div className="flex flex-col leading-tight">
-                  <span className="text-sm font-semibold tracking-tight">Helios</span>
+                  <span className="text-sm font-semibold tracking-tight">
+                    Helios
+                  </span>
                   <span className="text-xs text-muted-foreground">Hub</span>
                 </div>
               </Link>
@@ -109,14 +111,18 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              onClick={() =>
+                setTheme(resolvedTheme === "dark" ? "light" : "dark")
+              }
               tooltip={resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
             >
               <HugeiconsIcon
                 icon={resolvedTheme === "dark" ? Sun01Icon : Moon01Icon}
                 size={16}
               />
-              <span>{resolvedTheme === "dark" ? "Light mode" : "Dark mode"}</span>
+              <span>
+                {resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+              </span>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

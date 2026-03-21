@@ -4,7 +4,9 @@ import type { HeliosApiError } from "@/types/errors"
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as HeliosApiError | null
+    const body = (await response
+      .json()
+      .catch(() => null)) as HeliosApiError | null
     throw new HeliosError(
       body?.error?.code ?? "internal_error",
       body?.error?.message ?? response.statusText,

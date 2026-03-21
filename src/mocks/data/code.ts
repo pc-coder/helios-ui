@@ -68,7 +68,7 @@ export const codeSearchStreamingResponse = {
     "        return m.publicKey, nil\n",
     "    })\n",
     "    if err != nil {\n",
-    "        return nil, fmt.Errorf(\"invalid token: %w\", err)\n",
+    '        return nil, fmt.Errorf("invalid token: %w", err)\n',
     "    }\n",
     "    claims := parsed.Claims.(*Claims)\n",
     "    if claims.Audience != m.expectedAudience {\n",

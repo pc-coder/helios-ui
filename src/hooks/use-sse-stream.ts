@@ -53,7 +53,11 @@ export function useSSEStream<TSource>() {
           path,
           body,
           (event) => {
-            const data = event as { type: string; content?: string; sources?: TSource[] }
+            const data = event as {
+              type: string
+              content?: string
+              sources?: TSource[]
+            }
 
             if (data.type === "chunk" && data.content) {
               contentRef.current += data.content

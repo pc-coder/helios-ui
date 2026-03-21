@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query"
 import { apiGet } from "@/lib/api-client"
-import type { ProjectsListResponse, ProjectDetail, RepositoryHealth } from "@/types/projects"
+import type {
+  ProjectsListResponse,
+  ProjectDetail,
+  RepositoryHealth,
+} from "@/types/projects"
 
 export function useProjects() {
   return useQuery({
