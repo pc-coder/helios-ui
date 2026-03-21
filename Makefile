@@ -1,6 +1,6 @@
 COMPOSE = docker compose -f infrastructure/docker-compose.yml
 
-.PHONY: install lint typecheck format-check check build serve down clean
+.PHONY: install lint typecheck format-check test check build serve down clean
 
 install:
 	$(COMPOSE) run --rm install
@@ -14,7 +14,10 @@ typecheck:
 format-check:
 	$(COMPOSE) run --rm format-check
 
-check: lint typecheck format-check
+test:
+	$(COMPOSE) run --rm test
+
+check: lint typecheck format-check test
 
 build:
 	$(COMPOSE) run --rm build
