@@ -36,7 +36,12 @@ export interface Pipeline {
   link: string
 }
 
-export interface LargeFiles {
+export interface StaleBranch {
+  name: string
+  last_commit_timestamp: number
+}
+
+export interface SizeGroups {
   above_500kb: number
   above_1mb: number
   above_5mb: number
@@ -47,10 +52,12 @@ export interface RepositoryHealth {
   display_name: string
   default_branch: string
   total_branches: number
-  stale_branches: string[]
+  size_in_bytes: number
+  count_of_files: number
+  stale_branches: StaleBranch[]
   open_prs_count: number
   open_issues_count: number
-  languages: string[]
+  languages_stats: Record<string, number>
   pipelines: Pipeline[]
-  large_files: LargeFiles
+  size_groups: SizeGroups
 }

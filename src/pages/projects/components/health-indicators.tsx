@@ -35,6 +35,7 @@ export function HealthIndicator({
 
 interface LanguageBarProps {
   languages: string[]
+  stats?: Record<string, number>
   maxVisible?: number
 }
 
@@ -72,7 +73,13 @@ const languageColors: Record<string, string> = {
   CSS: "bg-blue-300",
 }
 
-function LanguageDot({ lang }: { lang: string }) {
+function LanguageDot({
+  lang,
+  percentage,
+}: {
+  lang: string
+  percentage?: number
+}) {
   return (
     <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
       <span
@@ -82,12 +89,26 @@ function LanguageDot({ lang }: { lang: string }) {
         )}
       />
       {lang}
+      {percentage !== undefined && (
+        <span className="text-[10px] tabular-nums">{percentage}%</span>
+      )}
     </span>
   )
 }
 
-export function LanguageBar({ languages, maxVisible = 4 }: LanguageBarProps) {
+export function LanguageBar({
+  languages,
+  stats,
+  maxVisible = 4,
+}: LanguageBarProps) {
   if (languages.length === 0) return null
+
+  const total = stats ? Object.values(stats).reduce((a, b) => a + b, 0) : 0
+
+  function getPercentage(lang: string): number | undefined {
+    if (!stats || !total) return undefined
+    return Math.round((stats[lang] / total) * 100)
+  }
 
   const visible = languages.slice(0, maxVisible)
   const remaining = languages.slice(maxVisible)
@@ -95,7 +116,7 @@ export function LanguageBar({ languages, maxVisible = 4 }: LanguageBarProps) {
   return (
     <div className="flex items-center gap-1.5">
       {visible.map((lang) => (
-        <LanguageDot key={lang} lang={lang} />
+        <LanguageDot key={lang} lang={lang} percentage={getPercentage(lang)} />
       ))}
       {remaining.length > 0 && (
         <Tooltip>

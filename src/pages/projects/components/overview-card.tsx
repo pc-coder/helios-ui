@@ -7,6 +7,13 @@ interface OverviewCardProps {
   repo: RepositoryHealth
 }
 
+function formatBytes(bytes: number): string {
+  if (bytes >= 1_000_000_000) return `${(bytes / 1_000_000_000).toFixed(1)} GB`
+  if (bytes >= 1_000_000) return `${(bytes / 1_000_000).toFixed(1)} MB`
+  if (bytes >= 1_000) return `${(bytes / 1_000).toFixed(1)} KB`
+  return `${bytes} B`
+}
+
 export function OverviewCard({ repo }: OverviewCardProps) {
   return (
     <Card>
@@ -28,7 +35,24 @@ export function OverviewCard({ repo }: OverviewCardProps) {
           </span>
         </div>
         <Separator />
-        <LanguageBar languages={repo.languages} />
+        <div className="flex items-baseline justify-between">
+          <span className="text-sm text-muted-foreground">Size</span>
+          <span className="text-sm tabular-nums">
+            {formatBytes(repo.size_in_bytes)}
+          </span>
+        </div>
+        <Separator />
+        <div className="flex items-baseline justify-between">
+          <span className="text-sm text-muted-foreground">Files</span>
+          <span className="text-sm tabular-nums">
+            {repo.count_of_files.toLocaleString()}
+          </span>
+        </div>
+        <Separator />
+        <LanguageBar
+          languages={Object.keys(repo.languages_stats)}
+          stats={repo.languages_stats}
+        />
       </CardContent>
     </Card>
   )

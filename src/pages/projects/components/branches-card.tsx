@@ -7,6 +7,18 @@ interface BranchesCardProps {
   repo: RepositoryHealth
 }
 
+function formatRelativeTime(timestamp: number): string {
+  const now = Date.now() / 1000
+  const diff = now - timestamp
+  const days = Math.floor(diff / 86400)
+
+  if (days < 30) return `${days}d ago`
+  const months = Math.floor(days / 30)
+  if (months < 12) return `${months}mo ago`
+  const years = Math.floor(months / 12)
+  return `${years}y ago`
+}
+
 export function BranchesCard({ repo }: BranchesCardProps) {
   return (
     <Card>
@@ -30,11 +42,14 @@ export function BranchesCard({ repo }: BranchesCardProps) {
             <div className="flex flex-wrap gap-1.5">
               {repo.stale_branches.map((branch) => (
                 <Badge
-                  key={branch}
+                  key={branch.name}
                   variant="secondary"
-                  className="font-mono text-xs"
+                  className="gap-1 font-mono text-xs"
                 >
-                  {branch}
+                  {branch.name}
+                  <span className="font-sans text-[10px] text-muted-foreground">
+                    {formatRelativeTime(branch.last_commit_timestamp)}
+                  </span>
                 </Badge>
               ))}
             </div>

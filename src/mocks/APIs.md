@@ -311,15 +311,39 @@ GET /api/helios/v1/projects/:projectId/repositories/:repositoryId
   "display_name": "Payments API",
   "default_branch": "main",
   "total_branches": 18,
-  "stale_branches": ["feature/old-checkout", "hotfix/legacy-tax", "experiment/v2-flow"],
+  "size_in_bytes": 250000000,
+  "count_of_files": 350,
+  "stale_branches": [
+    {
+      "name": "feature/old-checkout",
+      "last_commit_timestamp": 1682345600
+    },
+    {
+      "name": "hotfix/legacy-tax",
+      "last_commit_timestamp": 1682345600
+    },
+    {
+      "name": "experiment/v2-flow",
+      "last_commit_timestamp": 1682345600
+    }
+  ],
   "open_prs_count": 5,
   "open_issues_count": 2,
-  "languages": ["Java", "Go"],
+  "languages_stats": {
+    "Java": 200,
+    "Go": 150
+  },
   "pipelines": [
-    { "name": "build-and-test", "link": "https://ci.example.com/payments-api/build-and-test" },
-    { "name": "deploy-staging", "link": "https://ci.example.com/payments-api/deploy-staging" }
+    {
+      "name": "build-and-test",
+      "link": "https://ci.example.com/payments-api/build-and-test"
+    },
+    {
+      "name": "deploy-staging",
+      "link": "https://ci.example.com/payments-api/deploy-staging"
+    }
   ],
-  "large_files": {
+  "size_groups": {
     "above_500kb": 12,
     "above_1mb": 6,
     "above_5mb": 2
