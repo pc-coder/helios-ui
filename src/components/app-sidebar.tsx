@@ -6,7 +6,6 @@ import {
   ApiIcon,
   FolderOpenIcon,
   Sun01Icon,
-  Sun03Icon,
   Moon01Icon,
 } from "@hugeicons/core-free-icons"
 import {
@@ -22,6 +21,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { useTheme } from "@/components/theme-provider"
+import { HeliosLogo } from "@/components/helios-logo"
 import { ROUTES } from "@/lib/constants"
 
 const navItems = [
@@ -65,10 +65,8 @@ export function AppSidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg" tooltip="Helios Hub">
               <Link to="/">
-                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                  <HugeiconsIcon icon={Sun03Icon} size={18} />
-                </div>
-                <div className="flex flex-col leading-tight">
+                <HeliosLogo size={28} />
+                <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
                   <span className="text-sm font-semibold tracking-tight">
                     Helios
                   </span>
