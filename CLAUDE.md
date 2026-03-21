@@ -4,19 +4,27 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Commands
 
+**Local development:**
 - `npm run dev` — Start Vite dev server (MSW mock server auto-starts in dev mode)
 - `npm run build` — Type-check with `tsc -b` then build with Vite
 - `npm run lint` — ESLint across the project
-- `npm run format` — Prettier (ts/tsx files)
+- `npm run format` — Prettier write (ts/tsx files)
 - `npm run typecheck` — Type-check only (`tsc --noEmit`)
-- `npm run preview` — Preview production build
 - `npx shadcn@latest add <component>` — Add a shadcn/ui component
+
+**Docker (via Makefile):**
+- `make check` — Run lint + typecheck + format-check in containers
+- `make build` — Build app in container + build nginx production image
+- `make serve` — Build and serve at localhost:3000/helios/
+- `make clean` — Remove containers, images, and volumes
 
 ## Architecture
 
 React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, project health browsing.
 
-**Routing:** React Router v7 (`src/router.tsx`). Root layout in `src/app/layout.tsx` renders sidebar + `<Outlet />`. Routes: `/` (dashboard), `/code` (code search), `/apis` (API search), `/projects` (browse), `/projects/:projectId`, `/projects/:projectId/repos/:repositoryId`.
+**Base path:** All UI routes are prefixed with `/helios` (router basename in `src/router.tsx`, Vite `base` in `vite.config.ts`). Nginx config mirrors this at `infrastructure/nginx.conf`.
+
+**Routing:** React Router v7 (`src/router.tsx`). Root layout in `src/app/layout.tsx` renders collapsible sidebar (default collapsed) + `<Outlet />`. Routes: `/` (dashboard), `/code` (code search), `/apis` (API search), `/projects` (browse), `/projects/:projectId`, `/projects/:projectId/repos/:repositoryId`.
 
 **Data fetching:** `@tanstack/react-query` for server state (stats, filters, project lists). Custom `useSSEStream` hook (`src/hooks/use-sse-stream.ts`) for LLM streaming responses using RAF-batched state updates.
 
@@ -26,7 +34,7 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 
 **UI layer:** shadcn/ui v4 (radix-vega style, stone base color, CSS variables for theming). Components in `src/components/ui/`. Icons from `@hugeicons/react` + `@hugeicons/core-free-icons`.
 
-**Styling:** Tailwind CSS v4 via `@tailwindcss/vite` plugin (config in `src/index.css` via `@theme inline`). Dark mode via class strategy. Font: Inter Variable.
+**Styling:** Tailwind CSS v4 via `@tailwindcss/vite` plugin (config in `src/index.css` via `@theme inline`). Dark mode via class strategy. Font: Inter Variable. Prettier uses `prettier-plugin-tailwindcss` for class sorting with `cn` and `cva` functions.
 
 **Path alias:** `@/` maps to `src/`.
 
@@ -36,6 +44,13 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 - Types in `src/types/` matching the API spec
 - Hooks in `src/hooks/` — one file per domain (code search, API search, projects)
 - URL search params for search state (query, filters, mode) — shareable URLs
+
+## Docker Infrastructure
+
+- `infrastructure/Dockerfile` — nginx:alpine serving pre-built `dist/` under `/helios/`
+- `infrastructure/docker-compose.yml` — node:22-alpine services for lint, typecheck, format-check, build; nginx service for serve
+- `infrastructure/nginx.conf` — SPA routing under `/helios/`, `absolute_redirect off` for correct port forwarding
+- `Makefile` — wraps all docker compose commands
 
 ## API Domains
 
