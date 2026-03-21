@@ -22,7 +22,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { useTheme } from "@/components/theme-provider"
-import { Button } from "@/components/ui/button"
 import { ROUTES } from "@/lib/constants"
 
 const navItems = [
@@ -60,17 +59,23 @@ export function AppSidebar() {
       : theme
 
   return (
-    <Sidebar>
-      <SidebarHeader className="px-4 py-5">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <HugeiconsIcon icon={Sun03Icon} size={18} />
-          </div>
-          <div>
-            <span className="text-base font-semibold tracking-tight">Helios</span>
-            <span className="ml-1.5 text-xs text-muted-foreground">Hub</span>
-          </div>
-        </Link>
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild size="lg" tooltip="Helios Hub">
+              <Link to="/">
+                <div className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <HugeiconsIcon icon={Sun03Icon} size={18} />
+                </div>
+                <div className="flex flex-col leading-tight">
+                  <span className="text-sm font-semibold tracking-tight">Helios</span>
+                  <span className="text-xs text-muted-foreground">Hub</span>
+                </div>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarHeader>
 
       <SidebarContent>
@@ -100,19 +105,21 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="px-3 pb-4">
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start gap-2"
-          onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
-        >
-          <HugeiconsIcon
-            icon={resolvedTheme === "dark" ? Sun01Icon : Moon01Icon}
-            size={16}
-          />
-          <span>{resolvedTheme === "dark" ? "Light mode" : "Dark mode"}</span>
-        </Button>
+      <SidebarFooter className="px-2 pb-4">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              tooltip={resolvedTheme === "dark" ? "Light mode" : "Dark mode"}
+            >
+              <HugeiconsIcon
+                icon={resolvedTheme === "dark" ? Sun01Icon : Moon01Icon}
+                size={16}
+              />
+              <span>{resolvedTheme === "dark" ? "Light mode" : "Dark mode"}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
   )
