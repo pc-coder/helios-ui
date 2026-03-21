@@ -1,9 +1,13 @@
 import { API_BASE_URL } from "./constants"
 import { HeliosError } from "@/types/errors"
+import { emitSessionExpired } from "./auth-interceptor"
 import type { HeliosApiError } from "@/types/errors"
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
+    if (response.status === 401) {
+      emitSessionExpired()
+    }
     const body = (await response
       .json()
       .catch(() => null)) as HeliosApiError | null

@@ -1,5 +1,6 @@
 import { API_BASE_URL } from "./constants"
 import { HeliosError } from "@/types/errors"
+import { emitSessionExpired } from "./auth-interceptor"
 
 export async function streamSSE(
   path: string,
@@ -15,6 +16,9 @@ export async function streamSSE(
   })
 
   if (!response.ok) {
+    if (response.status === 401) {
+      emitSessionExpired()
+    }
     const errorBody = await response.json().catch(() => null)
     throw new HeliosError(
       errorBody?.error?.code ?? "internal_error",
