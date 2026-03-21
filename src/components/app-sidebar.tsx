@@ -64,8 +64,8 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg" tooltip="Helios Hub">
-              <Link to="/">
-                <HeliosLogo size={28} />
+              <Link to="/" className="group-data-[collapsible=icon]:justify-center">
+                <HeliosLogo size={28} className="shrink-0" />
                 <div className="flex flex-col leading-tight group-data-[collapsible=icon]:hidden">
                   <span className="text-sm font-semibold tracking-tight">
                     Helios
