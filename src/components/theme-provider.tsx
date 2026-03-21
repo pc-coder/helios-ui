@@ -228,3 +228,13 @@ export const useTheme = () => {
 
   return context
 }
+
+export const useResolvedTheme = (): ResolvedTheme => {
+  const { theme } = useTheme()
+
+  if (theme === "system") {
+    return getSystemTheme()
+  }
+
+  return theme
+}

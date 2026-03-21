@@ -1,72 +1,13 @@
-import { useCallback, useEffect, useRef } from "react"
-import { useSearchParams } from "react-router"
-import { HugeiconsIcon } from "@hugeicons/react"
-import { ApiIcon } from "@hugeicons/core-free-icons"
-import { useSSEStream } from "@/hooks/use-sse-stream"
-import { useApiRawSearch } from "@/hooks/use-api-search"
-import { ApiSearchBar } from "./components/api-search-bar"
-import { ApiStreamingResponse } from "./components/api-streaming-response"
-import { ApiRawResults } from "./components/api-raw-results"
-import type { ApiSource } from "@/types/api"
+import { useSearchParamUpdater } from "@/hooks/use-search-params-state"
+import { ApiSemanticSearch } from "./components/api-semantic-search"
+import { ApiRawSearch } from "./components/api-raw-search"
 
 export function ApiSearchPage() {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const { searchParams, updateParam } = useSearchParamUpdater()
   const query = searchParams.get("q") ?? ""
   const method = searchParams.get("method") ?? ""
   const service = searchParams.get("service") ?? ""
   const mode = (searchParams.get("mode") as "semantic" | "raw") ?? "semantic"
-
-  const { content, sources, isStreaming, error, startStream, abortStream } =
-    useSSEStream<ApiSource>()
-
-  const rawSearch = useApiRawSearch(mode === "raw" ? query : "", {
-    method: method && method !== "all" ? method : undefined,
-    service: service && service !== "all" ? service : undefined,
-  })
-
-  const updateParam = useCallback(
-    (key: string, value: string) => {
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev)
-        if (value && value !== "all") {
-          next.set(key, value)
-        } else {
-          next.delete(key)
-        }
-        return next
-      })
-    },
-    [setSearchParams]
-  )
-
-  const handleSubmit = useCallback(() => {
-    const trimmed = query.trim()
-    if (!trimmed) return
-
-    if (mode === "raw") return // React Query handles raw search
-
-    const filters: Record<string, string> = {}
-    if (method && method !== "all") filters.method = method
-    if (service && service !== "all") filters.service = service
-
-    startStream("/api/search", {
-      query: trimmed,
-      filters: Object.keys(filters).length > 0 ? filters : undefined,
-    })
-  }, [query, method, service, mode, startStream])
-
-  const autoSubmitted = useRef(false)
-  useEffect(() => {
-    if (searchParams.get("auto") === "1" && query.trim() && !autoSubmitted.current) {
-      autoSubmitted.current = true
-      setSearchParams((prev) => {
-        const next = new URLSearchParams(prev)
-        next.delete("auto")
-        return next
-      }, { replace: true })
-      handleSubmit()
-    }
-  }, [searchParams, query, handleSubmit, setSearchParams])
 
   return (
     <div className="space-y-6">
@@ -77,61 +18,22 @@ export function ApiSearchPage() {
         </p>
       </div>
 
-      <ApiSearchBar
-        query={query}
-        onQueryChange={(value) => updateParam("q", value)}
-        method={method}
-        onMethodChange={(value) => updateParam("method", value)}
-        service={service}
-        onServiceChange={(value) => updateParam("service", value)}
-        mode={mode}
-        onModeChange={(value) => updateParam("mode", value)}
-        onSubmit={handleSubmit}
-        isStreaming={isStreaming}
-        onStop={abortStream}
-      />
-
-      {error && (
-        <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4 text-sm text-destructive">
-          {error.message}
-        </div>
-      )}
-
       {mode === "semantic" ? (
-        <ApiStreamingResponse
-          content={content}
-          sources={sources}
-          isStreaming={isStreaming}
+        <ApiSemanticSearch
+          query={query}
+          method={method}
+          service={service}
+          mode={mode}
+          updateParam={updateParam}
         />
       ) : (
-        <ApiRawResults
-          results={rawSearch.data?.results}
-          isLoading={rawSearch.isLoading}
+        <ApiRawSearch
+          query={query}
+          method={method}
+          service={service}
+          mode={mode}
+          updateParam={updateParam}
         />
-      )}
-
-      {!content && !isStreaming && !error && mode === "semantic" && (
-        <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
-          <HugeiconsIcon icon={ApiIcon} size={40} className="text-muted-foreground/30" />
-          <p className="text-sm text-muted-foreground">
-            Ask about API endpoints using natural language
-          </p>
-          <p className="text-xs text-muted-foreground">
-            e.g. "Endpoint to create a new user"
-          </p>
-        </div>
-      )}
-
-      {mode === "raw" && !rawSearch.data && !rawSearch.isLoading && (
-        <div className="flex flex-col items-center justify-center gap-3 py-20 text-center">
-          <HugeiconsIcon icon={ApiIcon} size={40} className="text-muted-foreground/30" />
-          <p className="text-sm text-muted-foreground">
-            Search for API endpoints by keyword
-          </p>
-          <p className="text-xs text-muted-foreground">
-            e.g. "create user" or "payment"
-          </p>
-        </div>
       )}
     </div>
   )

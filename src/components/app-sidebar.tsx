@@ -22,7 +22,7 @@ import {
   SidebarMenuItem,
   SidebarSeparator,
 } from "@/components/ui/sidebar"
-import { useTheme } from "@/components/theme-provider"
+import { useTheme, useResolvedTheme } from "@/components/theme-provider"
 import { useAuth } from "@/components/auth-provider"
 import { HeliosLogo } from "@/components/helios-logo"
 import { ROUTES } from "@/lib/constants"
@@ -53,15 +53,9 @@ const navItems = [
 export function AppSidebar() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { theme, setTheme } = useTheme()
+  const { setTheme } = useTheme()
+  const resolvedTheme = useResolvedTheme()
   const { session, logout } = useAuth()
-
-  const resolvedTheme =
-    theme === "system"
-      ? window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light"
-      : theme
 
   function handleLogout() {
     logout()
