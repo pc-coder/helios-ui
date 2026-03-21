@@ -17,6 +17,7 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
     codeToHtml(code, {
       lang: language,
       themes: { light: "github-light", dark: "github-dark" },
+      defaultColor: false,
     }).then((result) => {
       if (!cancelled) setHtml(result)
     })

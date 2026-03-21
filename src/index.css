@@ -127,4 +127,9 @@
   html {
     @apply font-sans;
     }
+  .dark .shiki,
+  .dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    }
 }
