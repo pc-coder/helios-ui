@@ -3,8 +3,14 @@ import { getEnvConfig } from "./env"
 const config = getEnvConfig()
 
 export const API_BASE_URL = config.API_BASE_URL
-export const SSO_AUTHORITY_URL = config.SSO_AUTHORITY_URL
-export const SSO_CLIENT_ID = "helios-ui"
+
+export const SSO_CONFIG = {
+  CLIENT_ID: config.SSO_CLIENT_ID,
+  AUTHORITY_URL: config.SSO_AUTHORITY_URL,
+  TOKEN_URL: config.SSO_TOKEN_URL,
+  USER_INFO_URL: config.SSO_USER_INFO_URL,
+  REDIRECT_URL: config.SSO_REDIRECT_URL,
+} as const
 
 export const ROUTES = {
   DASHBOARD: "/",

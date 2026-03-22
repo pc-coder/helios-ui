@@ -5,61 +5,52 @@ import {
   saveSession,
   loadSession,
   clearSession,
+  getAuthHeaders,
 } from "../auth"
 import type { Session } from "../auth"
 
 describe("parseCallbackParams", () => {
-  it("returns session when all params present", () => {
+  it("returns code and state when present", () => {
     const params = new URLSearchParams({
-      access_token: "tok-123",
-      name: "Jane Doe",
-      email: "jane@example.com",
+      code: "auth-code-123",
+      state: "state-abc|verifier-xyz",
     })
 
     const result = parseCallbackParams(params)
 
     expect(result).toEqual({
-      accessToken: "tok-123",
-      name: "Jane Doe",
-      email: "jane@example.com",
+      code: "auth-code-123",
+      state: "state-abc|verifier-xyz",
     })
   })
 
-  it("returns null when access_token is missing", () => {
-    const params = new URLSearchParams({ name: "Jane", email: "jane@test.com" })
+  it("returns null when code is missing", () => {
+    const params = new URLSearchParams({ state: "some-state" })
 
     const result = parseCallbackParams(params)
 
     expect(result).toBeNull()
   })
 
-  it("defaults name to 'User' when missing", () => {
-    const params = new URLSearchParams({ access_token: "tok-123" })
+  it("returns null when state is missing", () => {
+    const params = new URLSearchParams({ code: "some-code" })
 
     const result = parseCallbackParams(params)
 
-    expect(result?.name).toBe("User")
-  })
-
-  it("defaults email to empty string when missing", () => {
-    const params = new URLSearchParams({ access_token: "tok-123" })
-
-    const result = parseCallbackParams(params)
-
-    expect(result?.email).toBe("")
+    expect(result).toBeNull()
   })
 })
 
 describe("buildSSOUrl", () => {
-  it("builds URL with correct params", () => {
-    const url = buildSSOUrl()
+  it("builds URL with PKCE params", async () => {
+    const url = await buildSSOUrl()
 
     expect(url).toContain("/sso/authorize?")
-    expect(url).toContain("client_id=helios-ui")
     expect(url).toContain("response_type=code")
-    expect(url).toContain("scope=openid+profile+email")
+    expect(url).toContain("code_challenge=")
+    expect(url).toContain("code_challenge_method=S256")
+    expect(url).toContain("state=")
     expect(url).toContain("redirect_uri=")
-    expect(url).toContain(encodeURIComponent("/helios/auth/callback"))
   })
 })
 
@@ -102,5 +93,25 @@ describe("session storage", () => {
     const result = loadSession()
 
     expect(result).toBeNull()
+  })
+})
+
+describe("getAuthHeaders", () => {
+  beforeEach(() => {
+    sessionStorage.clear()
+  })
+
+  it("returns Authorization header when session exists", () => {
+    saveSession({ accessToken: "tok-123", name: "X", email: "" })
+
+    const headers = getAuthHeaders()
+
+    expect(headers).toEqual({ Authorization: "Bearer tok-123" })
+  })
+
+  it("returns empty object when no session", () => {
+    const headers = getAuthHeaders()
+
+    expect(headers).toEqual({})
   })
 })

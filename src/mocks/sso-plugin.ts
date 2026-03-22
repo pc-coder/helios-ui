@@ -9,6 +9,7 @@ export function mockSSOPlugin(): Plugin {
 
         const url = new URL(req.url, `http://${req.headers.host}`)
         const redirectUri = url.searchParams.get("redirect_uri")
+        const state = url.searchParams.get("state")
 
         if (!redirectUri) {
           res.statusCode = 400
@@ -17,9 +18,8 @@ export function mockSSOPlugin(): Plugin {
         }
 
         const callbackUrl = new URL(redirectUri)
-        callbackUrl.searchParams.set("access_token", "mock-token-" + Date.now())
-        callbackUrl.searchParams.set("name", "Jane Doe")
-        callbackUrl.searchParams.set("email", "jane.doe@helios.ai")
+        callbackUrl.searchParams.set("code", "mock-code-" + Date.now())
+        if (state) callbackUrl.searchParams.set("state", state)
 
         res.statusCode = 302
         res.setHeader("Location", callbackUrl.toString())
