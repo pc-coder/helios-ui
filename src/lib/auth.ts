@@ -51,3 +51,9 @@ export function loadSession(): Session | null {
 export function clearSession(): void {
   sessionStorage.removeItem(SESSION_KEY)
 }
+
+export function getAuthHeaders(): Record<string, string> {
+  const session = loadSession()
+  if (!session) return {}
+  return { Authorization: `Bearer ${session.accessToken}` }
+}
