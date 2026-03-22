@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ApiIcon } from "@hugeicons/core-free-icons"
 import { useApiRawSearch } from "@/hooks/use-api-search"
@@ -19,23 +20,30 @@ export function ApiRawSearch({
   mode,
   updateParam,
 }: ApiRawSearchProps) {
+  const [queryInput, setQueryInput] = useState(() => query)
+
   const rawSearch = useApiRawSearch(query, {
     method: method && method !== "all" ? method : undefined,
     service: service && service !== "all" ? service : undefined,
   })
 
+  function handleSubmit() {
+    const trimmed = queryInput.trim()
+    if (trimmed) updateParam("q", trimmed)
+  }
+
   return (
     <>
       <ApiSearchBar
-        query={query}
-        onQueryChange={(value) => updateParam("q", value)}
+        query={queryInput}
+        onQueryChange={setQueryInput}
         method={method}
         onMethodChange={(value) => updateParam("method", value)}
         service={service}
         onServiceChange={(value) => updateParam("service", value)}
         mode={mode}
         onModeChange={(value) => updateParam("mode", value)}
-        onSubmit={() => {}}
+        onSubmit={handleSubmit}
         isStreaming={false}
         onStop={() => {}}
       />

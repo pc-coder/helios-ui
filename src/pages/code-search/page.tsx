@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { SourceCodeIcon } from "@hugeicons/core-free-icons"
 import { useSSEStream } from "@/hooks/use-sse-stream"
@@ -13,7 +13,10 @@ import type { CodeSource } from "@/types/code"
 export function CodeSearchPage() {
   const { searchParams, setSearchParams, updateParam, updateParams } =
     useSearchParamUpdater()
-  const query = searchParams.get("q") ?? ""
+
+  const [queryInput, setQueryInput] = useState(
+    () => searchParams.get("q") ?? ""
+  )
   const project = searchParams.get("project") ?? ""
   const repository = searchParams.get("repository") ?? ""
 
@@ -21,8 +24,10 @@ export function CodeSearchPage() {
     useSSEStream<CodeSource>()
 
   const handleSubmit = useCallback(() => {
-    const trimmed = query.trim()
+    const trimmed = queryInput.trim()
     if (!trimmed) return
+
+    updateParam("q", trimmed)
 
     const filters: Record<string, string> = {}
     if (project && project !== "all") filters.project = project
@@ -32,9 +37,9 @@ export function CodeSearchPage() {
       query: trimmed,
       filters: Object.keys(filters).length > 0 ? filters : undefined,
     })
-  }, [query, project, repository, startStream])
+  }, [queryInput, project, repository, startStream, updateParam])
 
-  useAutoSubmit(searchParams, query, handleSubmit, setSearchParams)
+  useAutoSubmit(searchParams, queryInput, handleSubmit, setSearchParams)
 
   return (
     <div className="space-y-6">
@@ -46,8 +51,8 @@ export function CodeSearchPage() {
       </div>
 
       <CodeSearchBar
-        query={query}
-        onQueryChange={(value) => updateParam("q", value)}
+        query={queryInput}
+        onQueryChange={setQueryInput}
         project={project}
         repository={repository}
         onProjectChange={(value, resetRepo) =>

@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ApiIcon } from "@hugeicons/core-free-icons"
 import { useSSEStream } from "@/hooks/use-sse-stream"
@@ -26,12 +26,15 @@ export function ApiSemanticSearch({
   updateParam,
 }: ApiSemanticSearchProps) {
   const { searchParams, setSearchParams } = useSearchParamUpdater()
+  const [queryInput, setQueryInput] = useState(() => query)
   const { content, sources, isStreaming, error, startStream, abortStream } =
     useSSEStream<ApiSource>()
 
   const handleSubmit = useCallback(() => {
-    const trimmed = query.trim()
+    const trimmed = queryInput.trim()
     if (!trimmed) return
+
+    updateParam("q", trimmed)
 
     const filters: Record<string, string> = {}
     if (method && method !== "all") filters.method = method
@@ -41,15 +44,15 @@ export function ApiSemanticSearch({
       query: trimmed,
       filters: Object.keys(filters).length > 0 ? filters : undefined,
     })
-  }, [query, method, service, startStream])
+  }, [queryInput, method, service, startStream, updateParam])
 
-  useAutoSubmit(searchParams, query, handleSubmit, setSearchParams)
+  useAutoSubmit(searchParams, queryInput, handleSubmit, setSearchParams)
 
   return (
     <>
       <ApiSearchBar
-        query={query}
-        onQueryChange={(value) => updateParam("q", value)}
+        query={queryInput}
+        onQueryChange={setQueryInput}
         method={method}
         onMethodChange={(value) => updateParam("method", value)}
         service={service}
