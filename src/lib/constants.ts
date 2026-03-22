@@ -1,4 +1,10 @@
-export const API_BASE_URL = "/api/helios/v1"
+import { getEnvConfig } from "./env"
+
+const config = getEnvConfig()
+
+export const API_BASE_URL = config.API_BASE_URL
+export const SSO_AUTHORITY_URL = config.SSO_AUTHORITY_URL
+export const SSO_CLIENT_ID = "helios-ui"
 
 export const ROUTES = {
   DASHBOARD: "/",
@@ -10,8 +16,3 @@ export const ROUTES = {
   LOGIN: "/login",
   AUTH_CALLBACK: "/auth/callback",
 } as const
-
-export const SSO_CLIENT_ID = "helios-ui"
-export const SSO_AUTHORITY_URL = import.meta.env.DEV
-  ? ""
-  : "https://sso.example.com"
