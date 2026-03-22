@@ -5,14 +5,14 @@ import type { ApiStats, ApiFilters, ApiRawSearchResponse } from "@/types/api"
 export function useApiStats() {
   return useQuery({
     queryKey: ["api", "stats"],
-    queryFn: () => apiGet<ApiStats>("/api/stats"),
+    queryFn: () => apiGet<ApiStats>("/v1/api/stats"),
   })
 }
 
 export function useApiFilters() {
   return useQuery({
     queryKey: ["api", "filters"],
-    queryFn: () => apiGet<ApiFilters>("/api/filters"),
+    queryFn: () => apiGet<ApiFilters>("/v1/api/filters"),
   })
 }
 
@@ -23,7 +23,7 @@ export function useApiRawSearch(
   return useQuery({
     queryKey: ["api", "raw-search", query, filters],
     queryFn: () =>
-      apiPost<ApiRawSearchResponse>("/api/raw-search", { query, filters }),
+      apiPost<ApiRawSearchResponse>("/v1/api/raw-search", { query, filters }),
     enabled: query.length > 0,
   })
 }

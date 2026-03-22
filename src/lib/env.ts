@@ -14,7 +14,7 @@ export function getEnvConfig(): EnvironmentConfiguration {
   return (
     window.environmentConfiguration ?? {
       ENVIRONMENT: "local",
-      API_BASE_URL: "/api/helios/v1",
+      API_BASE_URL: "/api/helios",
       SSO_AUTHORITY_URL: "",
     }
   )

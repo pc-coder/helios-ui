@@ -26,7 +26,7 @@ describe("useCodeStats", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(stats)
-    expect(mockApiGet).toHaveBeenCalledWith("/code/stats")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/code/stats")
   })
 })
 
@@ -46,6 +46,6 @@ describe("useCodeFilters", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(filters)
-    expect(mockApiGet).toHaveBeenCalledWith("/code/filters")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/code/filters")
   })
 })

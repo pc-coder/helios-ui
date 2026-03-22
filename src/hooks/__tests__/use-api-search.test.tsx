@@ -26,7 +26,7 @@ describe("useApiStats", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(stats)
-    expect(mockApiGet).toHaveBeenCalledWith("/api/stats")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/api/stats")
   })
 })
 
@@ -44,7 +44,7 @@ describe("useApiFilters", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(filters)
-    expect(mockApiGet).toHaveBeenCalledWith("/api/filters")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/api/filters")
   })
 })
 
@@ -71,7 +71,7 @@ describe("useApiRawSearch", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(response)
-    expect(mockApiPost).toHaveBeenCalledWith("/api/raw-search", {
+    expect(mockApiPost).toHaveBeenCalledWith("/v1/api/raw-search", {
       query: "user",
       filters: {},
     })

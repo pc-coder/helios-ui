@@ -37,7 +37,7 @@ export function ApiSemanticSearch({
     if (method && method !== "all") filters.method = method
     if (service && service !== "all") filters.service = service
 
-    startStream("/api/search", {
+    startStream("/v1/api/search", {
       query: trimmed,
       filters: Object.keys(filters).length > 0 ? filters : undefined,
     })

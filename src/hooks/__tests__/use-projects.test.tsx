@@ -24,7 +24,7 @@ describe("useProjects", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(data)
-    expect(mockApiGet).toHaveBeenCalledWith("/projects")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/projects")
   })
 })
 
@@ -42,7 +42,7 @@ describe("useProjectDetail", () => {
     await waitFor(() => expect(result.current.isSuccess).toBe(true))
 
     expect(result.current.data).toEqual(data)
-    expect(mockApiGet).toHaveBeenCalledWith("/projects/payments")
+    expect(mockApiGet).toHaveBeenCalledWith("/v1/projects/payments")
   })
 
   it("is disabled when projectId is empty", () => {
@@ -70,7 +70,7 @@ describe("useRepositoryHealth", () => {
 
     expect(result.current.data).toEqual(data)
     expect(mockApiGet).toHaveBeenCalledWith(
-      "/projects/payments/repositories/payments-api"
+      "/v1/projects/payments/repositories/payments-api"
     )
   })
 

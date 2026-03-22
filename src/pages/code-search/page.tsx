@@ -28,7 +28,7 @@ export function CodeSearchPage() {
     if (project && project !== "all") filters.project = project
     if (repository && repository !== "all") filters.repository = repository
 
-    startStream("/code/search", {
+    startStream("/v1/code/search", {
       query: trimmed,
       filters: Object.keys(filters).length > 0 ? filters : undefined,
     })

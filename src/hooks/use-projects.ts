@@ -9,14 +9,14 @@ import type {
 export function useProjects() {
   return useQuery({
     queryKey: ["projects"],
-    queryFn: () => apiGet<ProjectsListResponse>("/projects"),
+    queryFn: () => apiGet<ProjectsListResponse>("/v1/projects"),
   })
 }
 
 export function useProjectDetail(projectId: string) {
   return useQuery({
     queryKey: ["projects", projectId],
-    queryFn: () => apiGet<ProjectDetail>(`/projects/${projectId}`),
+    queryFn: () => apiGet<ProjectDetail>(`/v1/projects/${projectId}`),
     enabled: !!projectId,
   })
 }
@@ -26,7 +26,7 @@ export function useRepositoryHealth(projectId: string, repositoryId: string) {
     queryKey: ["projects", projectId, "repos", repositoryId],
     queryFn: () =>
       apiGet<RepositoryHealth>(
-        `/projects/${projectId}/repositories/${repositoryId}`
+        `/v1/projects/${projectId}/repositories/${repositoryId}`
       ),
     enabled: !!projectId && !!repositoryId,
   })
