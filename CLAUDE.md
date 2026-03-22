@@ -28,7 +28,7 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 
 **Base path:** All UI routes are prefixed with `/helios` (router basename in `src/router.tsx`, Vite `base` in `vite.config.ts`). Nginx config mirrors this at `infrastructure/nginx.conf`. MSW service worker URL also uses `/helios/mockServiceWorker.js`.
 
-**Auth:** SSO flow via `src/lib/auth.ts`. AuthProvider context (`src/components/auth-provider.tsx`) wraps the app. ProtectedRoute (`src/components/protected-route.tsx`) guards all app routes — redirects to `/login` if no session. Session stored in `sessionStorage`. Mock SSO in dev via Vite plugin (`src/mocks/sso-plugin.ts`) that intercepts `/sso/authorize` and redirects back with mock credentials.
+**Auth:** OAuth2 PKCE flow. PKCE crypto in `src/lib/pkce.ts`, SSO orchestration in `src/lib/auth.ts` (buildSSOUrl, exchangeCodeForTokens, fetchUserInfo). AuthProvider context (`src/components/auth-provider.tsx`) wraps the app. ProtectedRoute guards all app routes. Session stored in `sessionStorage`. SSO config (client_id, authority_url, token_url, user_info_url, redirect_url) in runtime `config.js`. Mock SSO in dev via Vite plugin + MSW handlers for token exchange and user info. 401 interceptor shows session expired dialog.
 
 **Routing:** React Router v7 (`src/router.tsx`). Public routes: `/login`, `/auth/callback`. Protected routes render through root layout (`src/app/layout.tsx`) with collapsible sidebar (default collapsed) + `<Outlet />`. Routes: `/` (dashboard), `/code` (code search), `/apis` (API search), `/projects` (browse), `/projects/:projectId`, `/projects/:projectId/repos/:repositoryId`.
 
