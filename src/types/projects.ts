@@ -36,7 +36,7 @@ export interface Pipeline {
   link: string
 }
 
-export interface StaleBranch {
+export interface Branch {
   name: string
   last_commit_timestamp: number
 }
@@ -54,7 +54,7 @@ export interface RepositoryHealth {
   total_branches: number
   size_in_bytes: number
   count_of_files: number
-  stale_branches: StaleBranch[]
+  branches: Branch[]
   open_prs_count: number
   open_issues_count: number
   languages_stats: Record<string, number>

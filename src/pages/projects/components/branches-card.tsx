@@ -1,11 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
+import { BranchesDialog } from "./branches-dialog"
 import type { RepositoryHealth } from "@/types/projects"
 
 interface BranchesCardProps {
   repo: RepositoryHealth
 }
+
+const MAX_INLINE = 10
 
 function formatRelativeTime(timestamp: number): string {
   const now = Date.now() / 1000
@@ -20,6 +22,9 @@ function formatRelativeTime(timestamp: number): string {
 }
 
 export function BranchesCard({ repo }: BranchesCardProps) {
+  const allBranches = repo.branches
+  const visible = allBranches.slice(0, MAX_INLINE)
+
   return (
     <Card>
       <CardHeader className="pb-3">
@@ -33,31 +38,29 @@ export function BranchesCard({ repo }: BranchesCardProps) {
           </span>
         </div>
         <Separator />
-        {repo.stale_branches.length > 0 ? (
+        {allBranches.length > 0 ? (
           <div className="space-y-2">
-            <p className="text-xs font-medium text-amber-600 dark:text-amber-400">
-              {repo.stale_branches.length} stale branch
-              {repo.stale_branches.length !== 1 ? "es" : ""}
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {repo.stale_branches.map((branch) => (
-                <Badge
+            <div className="space-y-0.5">
+              {visible.map((branch) => (
+                <div
                   key={branch.name}
-                  variant="secondary"
-                  className="gap-1 font-mono text-xs"
+                  className="flex items-center justify-between rounded px-1.5 py-1 text-xs hover:bg-muted"
                 >
-                  {branch.name}
-                  <span className="font-sans text-[10px] text-muted-foreground">
+                  <span className="min-w-0 truncate font-mono text-[11px]">
+                    {branch.name}
+                  </span>
+                  <span className="shrink-0 pl-2 text-[10px] tabular-nums text-muted-foreground">
                     {formatRelativeTime(branch.last_commit_timestamp)}
                   </span>
-                </Badge>
+                </div>
               ))}
             </div>
+            {allBranches.length > MAX_INLINE && (
+              <BranchesDialog branches={allBranches} />
+            )}
           </div>
         ) : (
-          <p className="text-xs text-emerald-600 dark:text-emerald-400">
-            No stale branches
-          </p>
+          <p className="text-xs text-muted-foreground">No branches</p>
         )}
       </CardContent>
     </Card>

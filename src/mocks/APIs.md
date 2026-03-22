@@ -310,10 +310,10 @@ GET /api/helios/v1/projects/:projectId/repositories/:repositoryId
   "id": "payments-api",
   "display_name": "Payments API",
   "default_branch": "main",
-  "total_branches": 18,
+  "total_branches": 3,
   "size_in_bytes": 250000000,
   "count_of_files": 350,
-  "stale_branches": [
+  "branches": [
     {
       "name": "feature/old-checkout",
       "last_commit_timestamp": 1682345600
