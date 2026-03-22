@@ -15,16 +15,17 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: useProxy
-    ? {
-        proxy: {
-          "/api/helios": {
-            target: "http://localhost:8090",
-            changeOrigin: true,
-          },
+  server: {
+    port: 3000,
+    ...(useProxy && {
+      proxy: {
+        "/api/helios": {
+          target: "http://localhost:8090",
+          changeOrigin: true,
         },
-      }
-    : undefined,
+      },
+    }),
+  },
   test: {
     globals: true,
     environment: "jsdom",
