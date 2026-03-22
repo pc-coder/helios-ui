@@ -1,7 +1,10 @@
 import { describe, it, expect, vi } from "vitest"
 import { renderHook, act } from "@testing-library/react"
 import { MemoryRouter } from "react-router"
-import { useSearchParamUpdater, useAutoSubmit } from "../use-search-params-state"
+import {
+  useSearchParamUpdater,
+  useAutoSubmit,
+} from "../use-search-params-state"
 
 function createRouterWrapper(initialEntries?: string[]) {
   return function Wrapper({ children }: { children: React.ReactNode }) {

@@ -32,13 +32,15 @@ describe("streamSSE", () => {
     const onEvent = vi.fn()
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(
-        createMockSSEResponse([
-          'data: {"type":"chunk","content":"Hello"}\n\n',
-          'data: {"type":"chunk","content":" World"}\n\n',
-          'data: {"type":"done"}\n\n',
-        ])
-      )
+      vi
+        .fn()
+        .mockResolvedValue(
+          createMockSSEResponse([
+            'data: {"type":"chunk","content":"Hello"}\n\n',
+            'data: {"type":"chunk","content":" World"}\n\n',
+            'data: {"type":"done"}\n\n',
+          ])
+        )
     )
 
     await streamSSE("/code/search", { query: "test" }, onEvent)
@@ -52,11 +54,13 @@ describe("streamSSE", () => {
     const onEvent = vi.fn()
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(
-        createMockSSEResponse([
-          'data: {"type":"chunk","content":"x"}\n\ndata: [DONE]\n\n',
-        ])
-      )
+      vi
+        .fn()
+        .mockResolvedValue(
+          createMockSSEResponse([
+            'data: {"type":"chunk","content":"x"}\n\ndata: [DONE]\n\n',
+          ])
+        )
     )
 
     await streamSSE("/test", {}, onEvent)
@@ -68,12 +72,14 @@ describe("streamSSE", () => {
     const onEvent = vi.fn()
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(
-        createMockSSEResponse([
-          "data: not-json\n\n",
-          'data: {"type":"chunk","content":"ok"}\n\n',
-        ])
-      )
+      vi
+        .fn()
+        .mockResolvedValue(
+          createMockSSEResponse([
+            "data: not-json\n\n",
+            'data: {"type":"chunk","content":"ok"}\n\n',
+          ])
+        )
     )
 
     await streamSSE("/test", {}, onEvent)
@@ -115,11 +121,13 @@ describe("streamSSE", () => {
     const onEvent = vi.fn()
     vi.stubGlobal(
       "fetch",
-      vi.fn().mockResolvedValue(
-        createMockSSEResponse([
-          '\n\n: comment\n\ndata: {"type":"chunk","content":"x"}\n\n',
-        ])
-      )
+      vi
+        .fn()
+        .mockResolvedValue(
+          createMockSSEResponse([
+            '\n\n: comment\n\ndata: {"type":"chunk","content":"x"}\n\n',
+          ])
+        )
     )
 
     await streamSSE("/test", {}, onEvent)

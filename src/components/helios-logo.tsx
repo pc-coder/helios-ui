@@ -11,7 +11,13 @@ const INNER_RADIUS = 11.5
 const OUTER_RADIUS = 23
 
 function generateRays() {
-  const rays: { x1: number; y1: number; x2: number; y2: number; tier: number }[] = []
+  const rays: {
+    x1: number
+    y1: number
+    x2: number
+    y2: number
+    tier: number
+  }[] = []
 
   for (let i = 0; i < RAY_COUNT; i++) {
     const angle = (i * 2 * Math.PI) / RAY_COUNT

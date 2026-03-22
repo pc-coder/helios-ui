@@ -49,7 +49,7 @@ export function BranchesCard({ repo }: BranchesCardProps) {
                   <span className="min-w-0 truncate font-mono text-[11px]">
                     {branch.name}
                   </span>
-                  <span className="shrink-0 pl-2 text-[10px] tabular-nums text-muted-foreground">
+                  <span className="shrink-0 pl-2 text-[10px] text-muted-foreground tabular-nums">
                     {formatRelativeTime(branch.last_commit_timestamp)}
                   </span>
                 </div>

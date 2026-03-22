@@ -39,7 +39,7 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
   const copyButton = (
     <button
       onClick={handleCopy}
-      className="absolute top-2 right-2 rounded-md border bg-background/80 p-1.5 text-muted-foreground opacity-0 backdrop-blur transition-opacity hover:text-foreground group-hover/code:opacity-100"
+      className="absolute top-2 right-2 rounded-md border bg-background/80 p-1.5 text-muted-foreground opacity-0 backdrop-blur transition-opacity group-hover/code:opacity-100 hover:text-foreground"
       aria-label="Copy code"
     >
       <HugeiconsIcon icon={copied ? Tick01Icon : Copy01Icon} size={14} />

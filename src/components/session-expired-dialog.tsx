@@ -30,7 +30,10 @@ export function SessionExpiredDialog() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="sm:max-w-sm" onInteractOutside={(e) => e.preventDefault()}>
+      <DialogContent
+        className="sm:max-w-sm"
+        onInteractOutside={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Session Expired</DialogTitle>
           <DialogDescription>

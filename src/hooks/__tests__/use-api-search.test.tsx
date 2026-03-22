@@ -61,7 +61,11 @@ describe("useApiRawSearch", () => {
   })
 
   it("fetches results when query is provided", async () => {
-    const response = { results: [{ service: "test", method: "GET", path: "/", summary: "x", score: 0.9 }] }
+    const response = {
+      results: [
+        { service: "test", method: "GET", path: "/", summary: "x", score: 0.9 },
+      ],
+    }
     mockApiPost.mockResolvedValue(response)
 
     const { result } = renderHook(() => useApiRawSearch("user", {}), {

@@ -1,7 +1,9 @@
 import { describe, it, expect } from "vitest"
 import { createSSEStream } from "../utils/sse"
 
-async function readStream(stream: ReadableStream<Uint8Array>): Promise<string[]> {
+async function readStream(
+  stream: ReadableStream<Uint8Array>
+): Promise<string[]> {
   const reader = stream.getReader()
   const decoder = new TextDecoder()
   const lines: string[] = []

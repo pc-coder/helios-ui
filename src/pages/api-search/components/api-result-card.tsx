@@ -13,7 +13,7 @@ export function ApiResultCard({ result }: ApiResultCardProps) {
       <p className="ml-auto hidden shrink-0 text-xs text-muted-foreground sm:block">
         {result.summary}
       </p>
-      <span className="shrink-0 text-[10px] tabular-nums text-muted-foreground">
+      <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">
         {Math.round(result.score * 100)}%
       </span>
     </div>

@@ -67,10 +67,7 @@ export function AuthCallbackPage() {
         <p className="text-sm text-destructive">
           Authentication failed: {error}
         </p>
-        <a
-          href={ROUTES.LOGIN}
-          className="text-sm text-primary hover:underline"
-        >
+        <a href={ROUTES.LOGIN} className="text-sm text-primary hover:underline">
           Back to login
         </a>
       </div>

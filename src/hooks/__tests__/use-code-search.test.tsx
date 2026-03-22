@@ -36,7 +36,9 @@ describe("useCodeFilters", () => {
   })
 
   it("fetches and returns code filters", async () => {
-    const filters = { projects: [{ id: "p1", display_name: "P1", repositories: [] }] }
+    const filters = {
+      projects: [{ id: "p1", display_name: "P1", repositories: [] }],
+    }
     mockApiGet.mockResolvedValue(filters)
 
     const { result } = renderHook(() => useCodeFilters(), {

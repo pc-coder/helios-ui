@@ -18,8 +18,7 @@ let sessionTracingId: string | null = null
 
 export function getSessionTracingId(): string {
   if (!sessionTracingId) {
-    sessionTracingId =
-      sessionStorage.getItem(TRACING_KEY) ?? generateHexId(16)
+    sessionTracingId = sessionStorage.getItem(TRACING_KEY) ?? generateHexId(16)
     sessionStorage.setItem(TRACING_KEY, sessionTracingId)
   }
   return sessionTracingId

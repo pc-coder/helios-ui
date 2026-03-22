@@ -1,6 +1,10 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { renderHook, waitFor } from "@testing-library/react"
-import { useProjects, useProjectDetail, useRepositoryHealth } from "../use-projects"
+import {
+  useProjects,
+  useProjectDetail,
+  useRepositoryHealth,
+} from "../use-projects"
 import { createWrapper } from "@/test/wrapper"
 
 vi.mock("@/lib/api-client", () => ({

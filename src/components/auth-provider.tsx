@@ -13,8 +13,8 @@ interface AuthContextState {
 const AuthContext = React.createContext<AuthContextState | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [session, setSessionState] = React.useState<Session | null>(
-    () => loadSession()
+  const [session, setSessionState] = React.useState<Session | null>(() =>
+    loadSession()
   )
 
   const setSession = React.useCallback((session: Session) => {

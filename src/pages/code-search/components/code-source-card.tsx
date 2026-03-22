@@ -12,7 +12,9 @@ export function CodeSourceCard({ source }: CodeSourceCardProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(() => {
-    navigator.clipboard.writeText(`${source.repository}/${source.file}:${source.lines}`)
+    navigator.clipboard.writeText(
+      `${source.repository}/${source.file}:${source.lines}`
+    )
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }, [source])
@@ -37,7 +39,7 @@ export function CodeSourceCard({ source }: CodeSourceCardProps) {
         </div>
         <button
           onClick={handleCopy}
-          className="shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-opacity hover:text-foreground group-hover/source:opacity-100"
+          className="shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-opacity group-hover/source:opacity-100 hover:text-foreground"
           aria-label="Copy file path"
         >
           <HugeiconsIcon icon={copied ? Tick01Icon : Copy01Icon} size={12} />

@@ -113,7 +113,7 @@ export function BranchesDialog({ branches }: BranchesDialogProps) {
                   <span className="min-w-0 truncate font-mono">
                     {branch.name}
                   </span>
-                  <span className="shrink-0 pl-3 text-[11px] tabular-nums text-muted-foreground">
+                  <span className="shrink-0 pl-3 text-[11px] text-muted-foreground tabular-nums">
                     {formatRelativeTime(branch.last_commit_timestamp)}
                   </span>
                 </div>
