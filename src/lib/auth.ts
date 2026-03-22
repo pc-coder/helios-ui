@@ -59,7 +59,7 @@ export async function buildSSOUrl(): Promise<string> {
     state: encodeState(state, verifier),
   })
 
-  return `${SSO_CONFIG.AUTHORITY_URL}/sso/authorize?${params}`
+  return `${SSO_CONFIG.AUTHORITY_URL}?${params}`
 }
 
 // ── Callback parsing ─────────────────────────────────────────────
@@ -91,10 +91,7 @@ export async function exchangeCodeForTokens(
 ): Promise<TokenResponse> {
   const response = await fetch(SSO_CONFIG.TOKEN_URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...getTracingHeaders(),
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       code,
       redirect_uri: SSO_CONFIG.REDIRECT_URL,

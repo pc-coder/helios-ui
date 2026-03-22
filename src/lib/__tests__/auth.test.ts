@@ -45,7 +45,6 @@ describe("buildSSOUrl", () => {
   it("builds URL with PKCE params", async () => {
     const url = await buildSSOUrl()
 
-    expect(url).toContain("/sso/authorize?")
     expect(url).toContain("response_type=code")
     expect(url).toContain("code_challenge=")
     expect(url).toContain("code_challenge_method=S256")
