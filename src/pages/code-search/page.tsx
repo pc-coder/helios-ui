@@ -11,7 +11,7 @@ import { CodeStreamingResponse } from "./components/code-streaming-response"
 import type { CodeSource } from "@/types/code"
 
 export function CodeSearchPage() {
-  const { searchParams, setSearchParams, updateParam } =
+  const { searchParams, setSearchParams, updateParam, updateParams } =
     useSearchParamUpdater()
   const query = searchParams.get("q") ?? ""
   const project = searchParams.get("project") ?? ""
@@ -49,8 +49,12 @@ export function CodeSearchPage() {
         query={query}
         onQueryChange={(value) => updateParam("q", value)}
         project={project}
-        onProjectChange={(value) => updateParam("project", value)}
         repository={repository}
+        onProjectChange={(value, resetRepo) =>
+          resetRepo
+            ? updateParams({ project: value, repository: "" })
+            : updateParam("project", value)
+        }
         onRepositoryChange={(value) => updateParam("repository", value)}
         onSubmit={handleSubmit}
         isStreaming={isStreaming}

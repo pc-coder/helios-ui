@@ -19,7 +19,24 @@ export function useSearchParamUpdater() {
     [setSearchParams]
   )
 
-  return { searchParams, setSearchParams, updateParam }
+  const updateParams = useCallback(
+    (updates: Record<string, string>) => {
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev)
+        for (const [key, value] of Object.entries(updates)) {
+          if (value && value !== "all") {
+            next.set(key, value)
+          } else {
+            next.delete(key)
+          }
+        }
+        return next
+      })
+    },
+    [setSearchParams]
+  )
+
+  return { searchParams, setSearchParams, updateParam, updateParams }
 }
 
 export function useAutoSubmit(

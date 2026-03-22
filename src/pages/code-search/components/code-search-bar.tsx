@@ -15,8 +15,8 @@ interface CodeSearchBarProps {
   query: string
   onQueryChange: (query: string) => void
   project: string
-  onProjectChange: (project: string) => void
   repository: string
+  onProjectChange: (project: string, resetRepo?: boolean) => void
   onRepositoryChange: (repository: string) => void
   onSubmit: () => void
   isStreaming: boolean
@@ -27,8 +27,8 @@ export function CodeSearchBar({
   query,
   onQueryChange,
   project,
-  onProjectChange,
   repository,
+  onProjectChange,
   onRepositoryChange,
   onSubmit,
   isStreaming,
@@ -82,11 +82,8 @@ export function CodeSearchBar({
 
       <div className="flex gap-2">
         <Select
-          value={project}
-          onValueChange={(value) => {
-            onProjectChange(value)
-            onRepositoryChange("")
-          }}
+          value={project || "all"}
+          onValueChange={(value) => onProjectChange(value, true)}
         >
           <SelectTrigger className="w-48">
             <SelectValue placeholder="All projects" />
@@ -102,7 +99,7 @@ export function CodeSearchBar({
         </Select>
 
         <Select
-          value={repository}
+          value={repository || "all"}
           onValueChange={onRepositoryChange}
           disabled={!project || project === "all"}
         >
