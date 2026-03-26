@@ -1,6 +1,7 @@
 import { useCodeStats } from "@/hooks/use-code-search"
 import { useApiStats } from "@/hooks/use-api-search"
-import { StatsCards } from "./components/stats-cards"
+import { HeliosLogo } from "@/components/helios-logo"
+import { StatsRibbon } from "./components/stats-ribbon"
 import { QuickSearch } from "./components/quick-search"
 
 export function DashboardPage() {
@@ -8,28 +9,28 @@ export function DashboardPage() {
   const { data: apiStats, isLoading: apiLoading } = useApiStats()
 
   return (
-    <div className="space-y-10">
-      <div>
-        <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
+    <div className="flex flex-col items-center gap-10 pt-12">
+      <div className="flex flex-col items-center gap-3">
+        <div className="flex items-center gap-3">
+          <HeliosLogo size={40} />
+          <h1 className="text-3xl font-bold tracking-tight">Helios</h1>
+        </div>
         <p className="text-sm text-muted-foreground">
-          Overview of your codebases and APIs
+          Your enterprise gateway to code intelligence and API discovery
         </p>
       </div>
 
-      <StatsCards
-        codeStats={codeStats}
-        apiStats={apiStats}
-        isLoading={codeLoading || apiLoading}
-      />
+      <div className="w-full max-w-2xl">
+        <QuickSearch />
+      </div>
 
-      <QuickSearch />
-
-      {codeStats && (
-        <div className="text-center text-xs text-muted-foreground">
-          Indexing {codeStats.languages.join(", ")} across{" "}
-          {codeStats.repositories_count} repositories
-        </div>
-      )}
+      <div className="w-full">
+        <StatsRibbon
+          codeStats={codeStats}
+          apiStats={apiStats}
+          isLoading={codeLoading || apiLoading}
+        />
+      </div>
     </div>
   )
 }
