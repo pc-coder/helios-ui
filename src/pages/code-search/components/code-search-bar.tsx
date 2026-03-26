@@ -45,7 +45,7 @@ function FilterCombobox<T extends { id: string; display_name: string }>({
   const selectedLabel =
     value === "all" || !value
       ? placeholder
-      : items.find((i) => i.id === value)?.display_name ?? placeholder
+      : (items.find((i) => i.id === value)?.display_name ?? placeholder)
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

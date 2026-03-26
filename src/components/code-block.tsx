@@ -48,7 +48,9 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
 
   if (!html) {
     return (
-      <div className={cn("group/code relative rounded-lg bg-muted/50", className)}>
+      <div
+        className={cn("group/code relative rounded-lg bg-muted/50", className)}
+      >
         <pre className="overflow-x-auto rounded-lg border bg-muted p-4 text-xs">
           <code>{code}</code>
         </pre>

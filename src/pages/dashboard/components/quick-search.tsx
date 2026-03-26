@@ -25,24 +25,6 @@ export function QuickSearch() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="flex justify-center">
-        <Tabs
-          value={mode}
-          onValueChange={(v) => setMode(v as SearchMode)}
-        >
-          <TabsList>
-            <TabsTrigger value="code" className="gap-1.5 px-4">
-              <HugeiconsIcon icon={SourceCodeIcon} size={14} />
-              Code
-            </TabsTrigger>
-            <TabsTrigger value="apis" className="gap-1.5 px-4">
-              <HugeiconsIcon icon={ApiIcon} size={14} />
-              APIs
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
-      </div>
-
       <div className="relative">
         <HugeiconsIcon
           icon={Search01Icon}
@@ -59,6 +41,21 @@ export function QuickSearch() {
           }
           className="h-12 pl-10 text-sm"
         />
+      </div>
+
+      <div className="flex justify-center">
+        <Tabs value={mode} onValueChange={(v) => setMode(v as SearchMode)}>
+          <TabsList>
+            <TabsTrigger value="code" className="gap-1.5 px-4">
+              <HugeiconsIcon icon={SourceCodeIcon} size={14} />
+              Code
+            </TabsTrigger>
+            <TabsTrigger value="apis" className="gap-1.5 px-4">
+              <HugeiconsIcon icon={ApiIcon} size={14} />
+              APIs
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
       </div>
     </form>
   )

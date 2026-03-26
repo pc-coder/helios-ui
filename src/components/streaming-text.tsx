@@ -19,7 +19,7 @@ export function StreamingText({
   return (
     <div
       className={cn(
-        "prose prose-stone dark:prose-invert max-w-none prose-headings:font-semibold prose-p:leading-relaxed prose-pre:my-4",
+        "prose max-w-none prose-stone dark:prose-invert prose-headings:font-semibold prose-p:leading-relaxed prose-pre:my-4",
         className
       )}
     >

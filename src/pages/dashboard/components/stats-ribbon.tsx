@@ -63,9 +63,7 @@ export function StatsRibbon({
       <div className="flex items-center justify-center gap-4">
         {items.map((item, index) => (
           <div key={item.key} className="flex items-center gap-4">
-            {index > 0 && (
-              <Separator orientation="vertical" className="h-5" />
-            )}
+            {index > 0 && <Separator orientation="vertical" className="h-5" />}
             <div className="flex items-center gap-1.5">
               <div className={item.iconColor}>
                 <HugeiconsIcon icon={item.icon} size={14} />

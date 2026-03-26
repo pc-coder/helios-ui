@@ -45,7 +45,7 @@ function ServiceCombobox({
   const selectedLabel =
     value === "all"
       ? "All services"
-      : services.find((s) => s.id === value)?.display_name ?? "All services"
+      : (services.find((s) => s.id === value)?.display_name ?? "All services")
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
