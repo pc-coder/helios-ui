@@ -18,7 +18,10 @@ export function StreamingText({
 
   return (
     <div
-      className={cn("prose prose-sm dark:prose-invert max-w-none", className)}
+      className={cn(
+        "prose prose-stone dark:prose-invert max-w-none prose-headings:font-semibold prose-p:leading-relaxed prose-pre:my-4",
+        className
+      )}
     >
       <Markdown
         remarkPlugins={[remarkGfm]}

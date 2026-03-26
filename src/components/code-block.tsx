@@ -48,7 +48,7 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
 
   if (!html) {
     return (
-      <div className={cn("group/code relative", className)}>
+      <div className={cn("group/code relative rounded-lg bg-muted/50", className)}>
         <pre className="overflow-x-auto rounded-lg border bg-muted p-4 text-xs">
           <code>{code}</code>
         </pre>
@@ -60,7 +60,7 @@ export function CodeBlock({ code, language, className }: CodeBlockProps) {
   return (
     <div
       className={cn(
-        "group/code relative [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:p-4 [&_pre]:text-xs",
+        "group/code relative rounded-lg bg-muted/50 [&_pre]:overflow-x-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:p-4 [&_pre]:text-xs",
         className
       )}
     >

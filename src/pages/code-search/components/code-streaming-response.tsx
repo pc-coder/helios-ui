@@ -1,5 +1,6 @@
 import { StreamingText } from "@/components/streaming-text"
 import { CodeSourceCard } from "./code-source-card"
+import { Separator } from "@/components/ui/separator"
 import type { CodeSource } from "@/types/code"
 
 interface CodeStreamingResponseProps {
@@ -16,28 +17,33 @@ export function CodeStreamingResponse({
   if (!content && !isStreaming) return null
 
   return (
-    <div className="space-y-6">
-      {isStreaming && !content && (
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="inline-block size-1.5 animate-pulse rounded-full bg-primary" />
-          Thinking...
-        </div>
-      )}
-
-      <StreamingText content={content} isStreaming={isStreaming} />
-
-      {sources.length > 0 && (
-        <div className="space-y-2">
-          <h3 className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
-            Sources
-          </h3>
-          <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-            {sources.map((source, index) => (
-              <CodeSourceCard key={index} source={source} />
-            ))}
+    <div className="rounded-lg border bg-card p-6">
+      <div className="space-y-8">
+        {isStreaming && !content && (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <span className="inline-block size-1.5 animate-pulse rounded-full bg-primary" />
+            Thinking...
           </div>
-        </div>
-      )}
+        )}
+
+        <StreamingText content={content} isStreaming={isStreaming} />
+
+        {sources.length > 0 && (
+          <>
+            <Separator />
+            <div className="space-y-2">
+              <h3 className="text-xs font-medium tracking-wider text-muted-foreground uppercase">
+                Sources
+              </h3>
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                {sources.map((source, index) => (
+                  <CodeSourceCard key={index} source={source} />
+                ))}
+              </div>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
