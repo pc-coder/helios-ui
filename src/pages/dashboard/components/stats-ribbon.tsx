@@ -59,29 +59,29 @@ export function StatsRibbon({
   isLoading,
 }: StatsRibbonProps) {
   return (
-    <div className="rounded-xl border bg-gradient-to-r from-blue-500/5 via-violet-500/5 to-amber-500/5 px-6 py-4 dark:from-blue-500/10 dark:via-violet-500/10 dark:to-amber-500/10">
-      <div className="flex items-center justify-center gap-6">
+    <div className="rounded-lg border bg-gradient-to-r from-blue-500/5 via-violet-500/5 to-amber-500/5 px-4 py-2.5 dark:from-blue-500/10 dark:via-violet-500/10 dark:to-amber-500/10">
+      <div className="flex items-center justify-center gap-4">
         {items.map((item, index) => (
-          <div key={item.key} className="flex items-center gap-6">
+          <div key={item.key} className="flex items-center gap-4">
             {index > 0 && (
-              <Separator orientation="vertical" className="h-8" />
+              <Separator orientation="vertical" className="h-5" />
             )}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-1.5">
               <div className={item.iconColor}>
-                <HugeiconsIcon icon={item.icon} size={16} />
+                <HugeiconsIcon icon={item.icon} size={14} />
               </div>
-              <div className="flex items-baseline gap-1.5">
+              <div className="flex items-baseline gap-1">
                 {isLoading ? (
-                  <Skeleton className="h-5 w-10" />
+                  <Skeleton className="h-4 w-8" />
                 ) : (
-                  <span className="text-lg font-semibold tabular-nums">
+                  <span className="text-sm font-semibold tabular-nums">
                     {(() => {
                       const v = item.getValue(codeStats, apiStats)
                       return v !== undefined ? formatNumber(v) : "—"
                     })()}
                   </span>
                 )}
-                <span className="text-xs text-muted-foreground">
+                <span className="text-[11px] text-muted-foreground">
                   {item.label}
                 </span>
               </div>

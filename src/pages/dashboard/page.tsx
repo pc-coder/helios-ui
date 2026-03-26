@@ -24,7 +24,7 @@ export function DashboardPage() {
         <QuickSearch />
       </div>
 
-      <div className="w-full">
+      <div className="w-full max-w-2xl">
         <StatsRibbon
           codeStats={codeStats}
           apiStats={apiStats}
