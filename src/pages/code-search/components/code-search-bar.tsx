@@ -1,15 +1,106 @@
+import { useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
+import {
+  Search01Icon,
+  Cancel01Icon,
+  ArrowDown01Icon,
+} from "@hugeicons/core-free-icons"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
 import { useCodeFilters } from "@/hooks/use-code-search"
+import type { CodeFilterProject, CodeFilterRepository } from "@/types/code"
+
+function FilterCombobox<T extends { id: string; display_name: string }>({
+  items,
+  value,
+  onChange,
+  placeholder,
+  searchPlaceholder,
+  disabled,
+  className,
+}: {
+  items: T[]
+  value: string
+  onChange: (value: string) => void
+  placeholder: string
+  searchPlaceholder: string
+  disabled?: boolean
+  className?: string
+}) {
+  const [open, setOpen] = useState(false)
+
+  const selectedLabel =
+    value === "all" || !value
+      ? placeholder
+      : items.find((i) => i.id === value)?.display_name ?? placeholder
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          disabled={disabled}
+          className={`w-48 justify-between text-xs font-normal ${className ?? ""}`}
+        >
+          <span className="truncate">{selectedLabel}</span>
+          <HugeiconsIcon
+            icon={ArrowDown01Icon}
+            size={14}
+            className="shrink-0 opacity-50"
+          />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-48 p-0" align="start">
+        <Command>
+          <CommandInput placeholder={searchPlaceholder} />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup>
+              <CommandItem
+                value="all"
+                data-checked={value === "all" || !value}
+                onSelect={() => {
+                  onChange("all")
+                  setOpen(false)
+                }}
+              >
+                {placeholder}
+              </CommandItem>
+              {items.map((item) => (
+                <CommandItem
+                  key={item.id}
+                  value={item.display_name}
+                  data-checked={value === item.id}
+                  onSelect={() => {
+                    onChange(item.id)
+                    setOpen(false)
+                  }}
+                >
+                  {item.display_name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  )
+}
 
 interface CodeSearchBarProps {
   query: string
@@ -81,40 +172,22 @@ export function CodeSearchBar({
       </div>
 
       <div className="flex gap-2">
-        <Select
+        <FilterCombobox<CodeFilterProject>
+          items={filters?.projects ?? []}
           value={project || "all"}
-          onValueChange={(value) => onProjectChange(value, true)}
-        >
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="All projects" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All projects</SelectItem>
-            {filters?.projects.map((p) => (
-              <SelectItem key={p.id} value={p.id}>
-                {p.display_name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+          onChange={(value) => onProjectChange(value, true)}
+          placeholder="All projects"
+          searchPlaceholder="Search projects..."
+        />
 
-        <Select
+        <FilterCombobox<CodeFilterRepository>
+          items={repositories}
           value={repository || "all"}
-          onValueChange={onRepositoryChange}
+          onChange={onRepositoryChange}
+          placeholder="All repositories"
+          searchPlaceholder="Search repositories..."
           disabled={!project || project === "all"}
-        >
-          <SelectTrigger className="w-48">
-            <SelectValue placeholder="All repositories" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All repositories</SelectItem>
-            {repositories.map((r) => (
-              <SelectItem key={r.id} value={r.id}>
-                {r.display_name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        />
       </div>
     </form>
   )

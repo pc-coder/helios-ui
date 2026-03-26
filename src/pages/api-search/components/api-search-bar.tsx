@@ -1,5 +1,10 @@
+import { useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { Search01Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
+import {
+  Search01Icon,
+  Cancel01Icon,
+  ArrowDown01Icon,
+} from "@hugeicons/core-free-icons"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import {
@@ -9,8 +14,92 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { useApiFilters } from "@/hooks/use-api-search"
+import type { ApiFilterService } from "@/types/api"
+
+function ServiceCombobox({
+  services,
+  value,
+  onChange,
+}: {
+  services: ApiFilterService[]
+  value: string
+  onChange: (value: string) => void
+}) {
+  const [open, setOpen] = useState(false)
+
+  const selectedLabel =
+    value === "all"
+      ? "All services"
+      : services.find((s) => s.id === value)?.display_name ?? "All services"
+
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-52 justify-between text-xs font-normal"
+        >
+          <span className="truncate">{selectedLabel}</span>
+          <HugeiconsIcon
+            icon={ArrowDown01Icon}
+            size={14}
+            className="shrink-0 opacity-50"
+          />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-52 p-0" align="start">
+        <Command>
+          <CommandInput placeholder="Search services..." />
+          <CommandList>
+            <CommandEmpty>No services found.</CommandEmpty>
+            <CommandGroup>
+              <CommandItem
+                value="all"
+                data-checked={value === "all"}
+                onSelect={() => {
+                  onChange("all")
+                  setOpen(false)
+                }}
+              >
+                All services
+              </CommandItem>
+              {services.map((s) => (
+                <CommandItem
+                  key={s.id}
+                  value={s.display_name}
+                  data-checked={value === s.id}
+                  onSelect={() => {
+                    onChange(s.id)
+                    setOpen(false)
+                  }}
+                >
+                  {s.display_name}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  )
+}
 
 interface ApiSearchBarProps {
   query: string
@@ -101,19 +190,11 @@ export function ApiSearchBar({
           </SelectContent>
         </Select>
 
-        <Select value={service} onValueChange={onServiceChange}>
-          <SelectTrigger className="w-52">
-            <SelectValue placeholder="All services" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All services</SelectItem>
-            {filters?.services.map((s) => (
-              <SelectItem key={s.id} value={s.id}>
-                {s.display_name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <ServiceCombobox
+          services={filters?.services ?? []}
+          value={service}
+          onChange={onServiceChange}
+        />
 
         <div className="ml-auto">
           <ToggleGroup

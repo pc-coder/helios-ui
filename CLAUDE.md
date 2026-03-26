@@ -6,6 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Local development:**
 - `npm run dev` — Start Vite dev server (MSW mock server + mock SSO auto-start in dev mode)
+- `npm run dev:proxy` — Start dev server with API proxy to `localhost:8090` (no MSW/mock SSO)
 - `npm run build` — Type-check with `tsc -b` then build with Vite
 - `npm run lint` — ESLint across the project
 - `npm run format` — Prettier write (ts/tsx files)
@@ -36,7 +37,7 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 
 **Mock server:** MSW v2 (`src/mocks/`). Handlers intercept all `/api/helios/v1/*` endpoints. SSE streaming simulated via `ReadableStream` in `src/mocks/utils/sse.ts`. Auto-starts in dev mode via `src/main.tsx`.
 
-**API client:** `src/lib/api-client.ts` (typed GET/POST wrappers), `src/lib/sse-client.ts` (SSE stream parser with abort support). Base URL: `/api/helios/v1`.
+**API client:** `src/lib/api-client.ts` (typed GET/POST wrappers), `src/lib/sse-client.ts` (SSE stream parser with abort support). Base URL from runtime config (`/api/helios`), endpoints include `/v1` prefix (e.g. `/v1/code/stats`).
 
 **UI layer:** shadcn/ui v4 (radix-vega style, stone base color, CSS variables for theming). Components in `src/components/ui/`. Icons from `@hugeicons/react` + `@hugeicons/core-free-icons`. Custom `HeliosLogo` SVG component (`src/components/helios-logo.tsx`).
 
