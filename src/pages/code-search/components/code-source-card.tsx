@@ -1,7 +1,6 @@
 import { useState, useCallback } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { File01Icon, Copy01Icon, Tick01Icon } from "@hugeicons/core-free-icons"
-import { Card, CardContent } from "@/components/ui/card"
 import type { CodeSource } from "@/types/code"
 
 interface CodeSourceCardProps {
@@ -20,31 +19,25 @@ export function CodeSourceCard({ source }: CodeSourceCardProps) {
   }, [source])
 
   return (
-    <Card className="group/source transition-colors hover:border-primary/30">
-      <CardContent className="flex items-start gap-3 p-3">
-        <div className="flex size-7 shrink-0 items-center justify-center rounded bg-muted">
-          <HugeiconsIcon
-            icon={File01Icon}
-            size={14}
-            className="text-muted-foreground"
-          />
-        </div>
-        <div className="min-w-0 flex-1 space-y-0.5">
-          <p className="truncate font-mono text-xs font-medium">
-            {source.file}
-          </p>
-          <p className="text-[11px] text-muted-foreground">
-            {source.repository} · L{source.lines}
-          </p>
-        </div>
-        <button
-          onClick={handleCopy}
-          className="shrink-0 rounded p-1 text-muted-foreground opacity-0 transition-opacity group-hover/source:opacity-100 hover:text-foreground"
-          aria-label="Copy file path"
-        >
-          <HugeiconsIcon icon={copied ? Tick01Icon : Copy01Icon} size={12} />
-        </button>
-      </CardContent>
-    </Card>
+    <div className="group/source flex items-center gap-1.5 rounded py-1 pl-6 pr-2 hover:bg-muted">
+      <HugeiconsIcon
+        icon={File01Icon}
+        size={13}
+        className="shrink-0 text-muted-foreground"
+      />
+      <span className="min-w-0 truncate font-mono text-xs">
+        {source.file}
+      </span>
+      <span className="shrink-0 text-[11px] text-muted-foreground tabular-nums">
+        :{source.lines}
+      </span>
+      <button
+        onClick={handleCopy}
+        className="shrink-0 rounded p-0.5 text-muted-foreground opacity-0 transition-opacity group-hover/source:opacity-100 hover:text-foreground"
+        aria-label="Copy file path"
+      >
+        <HugeiconsIcon icon={copied ? Tick01Icon : Copy01Icon} size={12} />
+      </button>
+    </div>
   )
 }
