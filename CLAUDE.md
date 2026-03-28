@@ -41,7 +41,7 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 
 **UI layer:** shadcn/ui v4 (radix-vega style, stone base color, CSS variables for theming). Components in `src/components/ui/`. Icons from `@hugeicons/react` + `@hugeicons/core-free-icons`. Custom `HeliosLogo` SVG component (`src/components/helios-logo.tsx`).
 
-**Styling:** Tailwind CSS v4 via `@tailwindcss/vite` plugin (config in `src/index.css` via `@theme inline`). Dark mode via class strategy with `useResolvedTheme()` hook. Font: Inter Variable. Prettier uses `prettier-plugin-tailwindcss` for class sorting with `cn` and `cva` functions.
+**Styling:** Tailwind CSS v4 via `@tailwindcss/vite` plugin (config in `src/index.css` via `@theme inline`). `@tailwindcss/typography` plugin for prose markdown rendering. Dark mode via class strategy with `useResolvedTheme()` hook. Font: Inter Variable. Prettier uses `prettier-plugin-tailwindcss` for class sorting with `cn` and `cva` functions.
 
 **Path alias:** `@/` maps to `src/`.
 
@@ -49,6 +49,10 @@ React 19 + TypeScript + Vite 7 SPA. Enterprise code and API hub with search, pro
 - Page components in `src/pages/<feature>/page.tsx` with co-located `components/` subdirectory
 - Presentation separated from data: pages use hooks for data, delegate rendering to child components
 - Shared hooks in `src/hooks/` — one file per domain, plus `use-search-params-state.ts` for shared URL param logic
+- Dashboard: Google-style hero layout with centered HeliosLogo + search (tabbed Code/APIs), stats ribbon at bottom
+- Streaming responses rendered in card containers (`rounded-lg border bg-card p-6`) with `StreamingText` (prose-sm typography via `@tailwindcss/typography`) and Separator before sources section
+- Code search sources grouped by repository with compact indented rows (not card grid)
+- Searchable dropdowns use Popover + Command (cmdk) combobox pattern for large lists (services, projects, repositories)
 - API search split by mode: `ApiSemanticSearch` and `ApiRawSearch` sub-components own their data fetching
 - Repository health cards extracted into `branches-card`, `overview-card`, `pipelines-card`, `large-files-card`
 
