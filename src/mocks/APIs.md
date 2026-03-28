@@ -231,14 +231,187 @@ POST /api/helios/v1/api/raw-search
 {
   "results": [
     {
-      "service": "identity-service",
-      "method": "POST",
-      "path": "/api/users",
-      "summary": "Creates a new user account",
-      "score": 0.89
+      "service": "customer-communication-gateway",
+      "path": "/api/ccg/v1/email-template/create",
+      "method": "post",
+      "summary": "Create email template",
+      "generated_semantic_summary": "Semantic Summary : **Intent:** Create a new email template in the Customer‑Communication‑Gateway service.  \n**Input:** A JSON payload that defines the email template (e.g., `name`, `subject`, `body`, optional placeholders/variables).  \n**Output:** A JSON response confirming creation, typically containing the generated `templateId`, `createdAt` timestamp, and a success `status`.  ",
+      "link": "https://backstage.devtools-internal.com/catalog/default/api/customer-communication-gateway/definition",
+      "source": "backstage",
+      "match_score": 0.85,
+      "api_spec": {
+        "/api/ccg/v1/email-template/create": {
+          "post": {
+            "description": "API to create new email template",
+            "consumes": [
+              "application/json"
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "tags": [
+              "Email",
+              "template"
+            ],
+            "summary": "Create email template",
+            "parameters": [
+              {
+                "type": "string",
+                "description": "header value is  XMLHttpRequest",
+                "name": "x-requested-with",
+                "in": "header",
+                "required": true
+              },
+              {
+                "type": "string",
+                "description": "header value is Prime authorisation bearer token",
+                "name": "Authorization",
+                "in": "header",
+                "required": true
+              },
+              {
+                "description": "Create Email Template Request",
+                "name": "CreateEmailTemplateRequest",
+                "in": "body",
+                "required": true,
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "body",
+                    "exclude_base_template",
+                    "mime_type",
+                    "scenarios",
+                    "sender",
+                    "service",
+                    "squad",
+                    "subject",
+                    "template_id"
+                  ],
+                  "properties": {
+                    "body": {
+                      "type": "string",
+                      "example": "email body as plain text"
+                    },
+                    "exclude_base_template": {
+                      "type": "boolean",
+                      "example": true
+                    },
+                    "mime_type": {
+                      "type": "string",
+                      "example": "content type of body eg: text/html"
+                    },
+                    "scenarios": {
+                      "type": "string",
+                      "example": "plain text value"
+                    },
+                    "sender": {
+                      "type": "string",
+                      "example": "Devtools@internaltools.com"
+                    },
+                    "service": {
+                      "type": "string",
+                      "example": "IDP-API"
+                    },
+                    "squad": {
+                      "type": "string",
+                      "example": "PLATFORM"
+                    },
+                    "subject": {
+                      "type": "string",
+                      "example": "plain text email subject"
+                    },
+                    "tags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "TAG1",
+                        "TAG2"
+                      ]
+                    },
+                    "template_id": {
+                      "type": "string",
+                      "example": "EMAIL_TEMPLATE_1"
+                    }
+                  }
+                }
+              }
+            ],
+            "responses": {
+              "200": {
+                "description": "Created Email Template Id",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "template_id": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "400": {
+                "description": "If template_id/body/subject/squad/service/scenario/sender/mime_type/exclude_base_template is not valid",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "additional_data": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "error_code": {
+                      "type": "string"
+                    },
+                    "error_message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "409": {
+                "description": "If template_id already exists",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "additional_data": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "error_code": {
+                      "type": "string"
+                    },
+                    "error_message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "500": {
+                "description": "Internal Server Error",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "additional_data": {
+                      "type": "object",
+                      "additionalProperties": true
+                    },
+                    "error_code": {
+                      "type": "string"
+                    },
+                    "error_message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }
+
 ```
 
 ---

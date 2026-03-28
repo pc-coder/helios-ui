@@ -39,10 +39,14 @@ export type ApiStreamEvent =
 
 export interface ApiRawResult {
   service: string
-  method: string
   path: string
+  method: string
   summary: string
-  score: number
+  generated_semantic_summary: string
+  link: string
+  source: string
+  match_score: number
+  api_spec: Record<string, unknown>
 }
 
 export interface ApiRawSearchResponse {

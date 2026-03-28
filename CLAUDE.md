@@ -76,7 +76,7 @@ Vitest with jsdom environment. Tests in `__tests__/` directories co-located with
 
 ## API Domains
 
-Three domains (spec at `../helios-apis/helios-apis/APIs.md`):
+Three domains (spec at `src/mocks/APIs.md`):
 - **Code Search** — `GET /code/stats`, `POST /code/search` (SSE streaming), `GET /code/filters`
 - **API Search** — `GET /api/stats`, `POST /api/search` (SSE), `POST /api/raw-search`, `GET /api/filters`
 - **Projects** — `GET /projects`, `GET /projects/:projectId`, `GET /projects/:projectId/repositories/:repositoryId`

@@ -14,7 +14,7 @@ export function ApiResultCard({ result }: ApiResultCardProps) {
         {result.summary}
       </p>
       <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">
-        {Math.round(result.score * 100)}%
+        {Math.round(result.match_score * 100)}%
       </span>
     </div>
   )

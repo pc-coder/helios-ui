@@ -58,7 +58,9 @@ export const apiHandlers = [
     let results = [...apiRawResults]
 
     if (body.filters?.method) {
-      results = results.filter((r) => r.method === body.filters!.method)
+      results = results.filter(
+        (r) => r.method.toUpperCase() === body.filters!.method!.toUpperCase()
+      )
     }
     if (body.filters?.service) {
       results = results.filter((r) => r.service === body.filters!.service)
