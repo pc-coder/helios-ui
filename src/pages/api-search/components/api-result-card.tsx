@@ -22,8 +22,8 @@ export function ApiResultCard({ result, onClick }: ApiResultCardProps) {
       className={`flex items-center gap-3 rounded-lg border px-3 py-2 ${onClick ? "cursor-pointer transition-colors hover:border-primary/30 hover:bg-muted/50" : ""}`}
     >
       <HttpMethodBadge method={result.method} />
-      <p className="min-w-0 truncate font-mono text-xs">{result.path}</p>
-      <p className="ml-auto hidden min-w-0 truncate text-xs text-muted-foreground sm:block">
+      <p className="shrink-0 font-mono text-xs">{result.path}</p>
+      <p className="hidden min-w-0 flex-1 truncate text-xs text-muted-foreground sm:block">
         {result.summary}
       </p>
       <span className="shrink-0 text-[10px] text-muted-foreground tabular-nums">

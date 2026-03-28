@@ -89,7 +89,7 @@ export const apiRawResults: ApiRawResult[] = [
     service: "identity-service",
     path: "/api/identity/v1/users",
     method: "post",
-    summary: "Create user account",
+    summary: "Creates a new user account with email verification, sends welcome notification, and initializes default user preferences",
     generated_semantic_summary:
       "**Intent:** Create a new user account.\n**Input:** JSON payload with `email`, `password`, `first_name`, `last_name`.\n**Output:** Created user object with `id`, `email`, `status`.",
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
@@ -401,7 +401,7 @@ export const apiRawResults: ApiRawResult[] = [
     service: "notifications-service",
     path: "/api/notifications/v1/email",
     method: "post",
-    summary: "Send transactional email",
+    summary: "Sends a templated transactional email to one or more recipients with variable substitution and optional scheduled delivery",
     generated_semantic_summary:
       "**Intent:** Send a transactional email to a user.\n**Input:** Recipient, template ID, and template variables.\n**Output:** Delivery confirmation with message ID.",
     link: "https://backstage.devtools-internal.com/catalog/default/api/notifications-service/definition",
