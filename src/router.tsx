@@ -7,6 +7,7 @@ import { AuthCallbackPage } from "@/pages/auth/callback"
 import { DashboardPage } from "@/pages/dashboard/page"
 import { CodeSearchPage } from "@/pages/code-search/page"
 import { ApiSearchPage } from "@/pages/api-search/page"
+import { ApiDetailPage } from "@/pages/api-search/detail/page"
 import { ProjectsPage } from "@/pages/projects/page"
 import { ProjectDetailPage } from "@/pages/projects/project-detail"
 import { RepositoryHealthPage } from "@/pages/projects/repository-health"
@@ -24,6 +25,7 @@ export const router = createBrowserRouter(
             { index: true, element: <DashboardPage /> },
             { path: "code", element: <CodeSearchPage /> },
             { path: "apis", element: <ApiSearchPage /> },
+            { path: "apis/detail", element: <ApiDetailPage /> },
             { path: "projects", element: <ProjectsPage /> },
             {
               path: "projects/:projectId",

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ApiResultCard } from "./api-result-card"
 import type { ApiRawResult } from "@/types/api"
@@ -18,6 +19,8 @@ function groupByService(results: ApiRawResult[]) {
 }
 
 export function ApiRawResults({ results, isLoading }: ApiRawResultsProps) {
+  const navigate = useNavigate()
+
   if (isLoading) {
     return (
       <div className="space-y-3">
@@ -44,7 +47,13 @@ export function ApiRawResults({ results, isLoading }: ApiRawResultsProps) {
           <h3 className="text-sm font-medium">{service}</h3>
           <div className="space-y-2">
             {items.map((result, index) => (
-              <ApiResultCard key={index} result={result} />
+              <ApiResultCard
+                key={index}
+                result={result}
+                onClick={() =>
+                  navigate("/apis/detail", { state: { result } })
+                }
+              />
             ))}
           </div>
         </div>
