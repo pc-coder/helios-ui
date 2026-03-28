@@ -134,7 +134,46 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
     source: "backstage",
     match_score: 0.82,
-    api_spec: {},
+    api_spec: {
+      "/api/identity/v1/users/:id": {
+        get: {
+          summary: "Retrieve user profile",
+          description: "Returns the full user profile for a given user ID, including nested address information.",
+          tags: ["Users"],
+          produces: ["application/json"],
+          parameters: [
+            { name: "id", in: "path", type: "string", required: true, description: "Unique user identifier" },
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+          ],
+          responses: {
+            "200": {
+              description: "User profile retrieved",
+              schema: {
+                type: "object",
+                properties: {
+                  id: { type: "string", example: "usr_abc123" },
+                  email: { type: "string", example: "user@example.com" },
+                  first_name: { type: "string", example: "Jane" },
+                  last_name: { type: "string", example: "Doe" },
+                  status: { type: "string", enum: ["active", "pending_verification", "deactivated"] },
+                  address: {
+                    type: "object",
+                    properties: {
+                      street: { type: "string", example: "123 Main St" },
+                      city: { type: "string", example: "San Francisco" },
+                      state: { type: "string", example: "CA" },
+                      zip: { type: "string", example: "94105" },
+                    },
+                  },
+                  created_at: { type: "string", format: "date-time", example: "2024-01-15T10:30:00Z" },
+                },
+              },
+            },
+            "404": { description: "User not found" },
+          },
+        },
+      },
+    },
   },
   {
     service: "identity-service",
@@ -146,7 +185,46 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
     source: "backstage",
     match_score: 0.78,
-    api_spec: {},
+    api_spec: {
+      "/api/identity/v1/users/:id": {
+        put: {
+          summary: "Update user profile",
+          tags: ["Users"],
+          consumes: ["application/json"],
+          produces: ["application/json"],
+          parameters: [
+            { name: "id", in: "path", type: "string", required: true, description: "Unique user identifier" },
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+            {
+              name: "UpdateUserRequest",
+              in: "body",
+              required: true,
+              schema: {
+                type: "object",
+                properties: {
+                  first_name: { type: "string", example: "Jane" },
+                  last_name: { type: "string", example: "Doe" },
+                  address: {
+                    type: "object",
+                    properties: {
+                      street: { type: "string", example: "456 Oak Ave" },
+                      city: { type: "string", example: "Los Angeles" },
+                      state: { type: "string", example: "CA" },
+                      zip: { type: "string", example: "90001" },
+                    },
+                  },
+                },
+              },
+            },
+          ],
+          responses: {
+            "200": { description: "User updated successfully" },
+            "400": { description: "Invalid request body" },
+            "404": { description: "User not found" },
+          },
+        },
+      },
+    },
   },
   {
     service: "identity-service",
@@ -158,7 +236,23 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
     source: "backstage",
     match_score: 0.71,
-    api_spec: {},
+    api_spec: {
+      "/api/identity/v1/users/:id": {
+        delete: {
+          summary: "Deactivate user account",
+          description: "Soft-deletes a user account. The user data is retained but the account is marked as deactivated.",
+          tags: ["Users"],
+          parameters: [
+            { name: "id", in: "path", type: "string", required: true, description: "Unique user identifier" },
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+          ],
+          responses: {
+            "204": { description: "User deactivated successfully" },
+            "404": { description: "User not found" },
+          },
+        },
+      },
+    },
   },
   {
     service: "identity-service",
@@ -170,7 +264,44 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
     source: "backstage",
     match_score: 0.68,
-    api_spec: {},
+    api_spec: {
+      "/api/identity/v1/users/:id/verify": {
+        post: {
+          summary: "Verify user email",
+          tags: ["Users", "Verification"],
+          consumes: ["application/json"],
+          produces: ["application/json"],
+          parameters: [
+            { name: "id", in: "path", type: "string", required: true, description: "Unique user identifier" },
+            {
+              name: "VerifyEmailRequest",
+              in: "body",
+              required: true,
+              schema: {
+                type: "object",
+                required: ["token"],
+                properties: {
+                  token: { type: "string", description: "Email verification token", example: "vrf_tok_abc123" },
+                },
+              },
+            },
+          ],
+          responses: {
+            "200": {
+              description: "Email verified",
+              schema: {
+                type: "object",
+                properties: {
+                  verified: { type: "boolean", example: true },
+                  verified_at: { type: "string", format: "date-time" },
+                },
+              },
+            },
+            "400": { description: "Invalid or expired token" },
+          },
+        },
+      },
+    },
   },
   {
     service: "identity-service",
@@ -182,7 +313,37 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/identity-service/definition",
     source: "backstage",
     match_score: 0.62,
-    api_spec: {},
+    api_spec: {
+      "/api/identity/v1/users/:id/password": {
+        patch: {
+          summary: "Change user password",
+          tags: ["Users", "Security"],
+          consumes: ["application/json"],
+          parameters: [
+            { name: "id", in: "path", type: "string", required: true, description: "Unique user identifier" },
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+            {
+              name: "ChangePasswordRequest",
+              in: "body",
+              required: true,
+              schema: {
+                type: "object",
+                required: ["current_password", "new_password"],
+                properties: {
+                  current_password: { type: "string", description: "Current password for verification" },
+                  new_password: { type: "string", description: "New password (min 8 chars, must include uppercase, number)" },
+                },
+              },
+            },
+          ],
+          responses: {
+            "204": { description: "Password changed successfully" },
+            "400": { description: "New password does not meet requirements" },
+            "401": { description: "Current password is incorrect" },
+          },
+        },
+      },
+    },
   },
   {
     service: "user-service",
@@ -194,7 +355,47 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/user-service/definition",
     source: "backstage",
     match_score: 0.55,
-    api_spec: {},
+    api_spec: {
+      "/api/users/v1/search": {
+        get: {
+          summary: "Search users",
+          tags: ["Users", "Search"],
+          produces: ["application/json"],
+          parameters: [
+            { name: "q", in: "query", type: "string", required: true, description: "Search query (name, email, or role)" },
+            { name: "page", in: "query", type: "integer", description: "Page number (default: 1)" },
+            { name: "limit", in: "query", type: "integer", description: "Results per page (default: 20, max: 100)" },
+            { name: "role", in: "query", type: "string", enum: ["admin", "user", "viewer"], description: "Filter by user role" },
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+          ],
+          responses: {
+            "200": {
+              description: "Search results",
+              schema: {
+                type: "object",
+                properties: {
+                  total: { type: "integer", example: 42 },
+                  page: { type: "integer", example: 1 },
+                  limit: { type: "integer", example: 20 },
+                  results: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "string", example: "usr_abc123" },
+                        email: { type: "string", example: "user@example.com" },
+                        name: { type: "string", example: "Jane Doe" },
+                        role: { type: "string", example: "admin" },
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    },
   },
   {
     service: "notifications-service",
@@ -206,6 +407,63 @@ export const apiRawResults: ApiRawResult[] = [
     link: "https://backstage.devtools-internal.com/catalog/default/api/notifications-service/definition",
     source: "backstage",
     match_score: 0.41,
-    api_spec: {},
+    api_spec: {
+      "/api/notifications/v1/email": {
+        post: {
+          summary: "Send transactional email",
+          description: "Sends a templated transactional email to one or more recipients.",
+          tags: ["Email", "Notifications"],
+          consumes: ["application/json"],
+          produces: ["application/json"],
+          parameters: [
+            { name: "Authorization", in: "header", type: "string", required: true, description: "Bearer token" },
+            { name: "x-idempotency-key", in: "header", type: "string", description: "Idempotency key to prevent duplicate sends" },
+            {
+              name: "SendEmailRequest",
+              in: "body",
+              required: true,
+              schema: {
+                type: "object",
+                required: ["template_id", "recipients"],
+                properties: {
+                  template_id: { type: "string", example: "WELCOME_EMAIL", description: "Email template identifier" },
+                  recipients: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        email: { type: "string", example: "user@example.com" },
+                        name: { type: "string", example: "Jane Doe" },
+                      },
+                    },
+                    description: "List of email recipients",
+                  },
+                  variables: {
+                    type: "object",
+                    additionalProperties: true,
+                    description: "Template variable key-value pairs",
+                  },
+                  schedule_at: { type: "string", format: "date-time", description: "Optional future send time" },
+                },
+              },
+            },
+          ],
+          responses: {
+            "202": {
+              description: "Email accepted for delivery",
+              schema: {
+                type: "object",
+                properties: {
+                  message_id: { type: "string", example: "msg_xyz789" },
+                  status: { type: "string", example: "queued" },
+                },
+              },
+            },
+            "400": { description: "Invalid template or recipient" },
+            "429": { description: "Rate limit exceeded" },
+          },
+        },
+      },
+    },
   },
 ]
